@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viewport Test - Artix</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+    }
+    .test-frame {
+      width: 100%;
+      height: 600px;
+      border: 2px solid #ccc;
+      margin-bottom: 20px;
+      background: white;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+      background: #ff5a00;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background: #e04e00;
+    }
+    .info {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Artix Mobile Responsiveness Test</h1>
+  
+  <div class="info">
+    <h3>Instructions:</h3>
+    <ol>
+      <li>Click each viewport size button below</li>
+      <li>Check if the site fits within the frame without horizontal scroll</li>
+      <li>Open browser DevTools and paste the overflow-detector.js script in the console</li>
+      <li>Test both portrait and landscape orientations</li>
+    </ol>
+  </div>
+
+  <div class="controls">
+    <button onclick="resizeFrame(320)">320px (iPhone SE)</button>
+    <button onclick="resizeFrame(360)">360px (Android)</button>
+    <button onclick="resizeFrame(375)">375px (iPhone 12/13)</button>
+    <button onclick="resizeFrame(390)">390px (iPhone 14)</button>
+    <button onclick="resizeFrame(412)">412px (Pixel)</button>
+    <button onclick="resizeFrame(430)">430px (iPhone 14 Pro Max)</button>
+    <button onclick="resizeFrame(600)">600px (Tablet portrait)</button>
+    <button onclick="resizeFrame(768)">768px (iPad portrait)</button>
+    <button onclick="resizeFrame(820)">820px (iPad Pro 11 portrait)</button>
+    <button onclick="resizeFrame(1024)">1024px (Desktop)</button>
+  </div>
+
+  <div class="controls">
+    <button onclick="resizeFrame(667, 375)">667x375 (iPhone 8 landscape)</button>
+    <button onclick="resizeFrame(844, 390)">844x390 (iPhone 14 landscape)</button>
+  </div>
+
+  <iframe id="testFrame" class="test-frame" src="http://localhost:5173/"></iframe>
+
+  <script>
+    function resizeFrame(width, height = 600) {
+      const frame = document.getElementById('testFrame');
+      frame.style.width = width + 'px';
+      frame.style.height = height + 'px';
+      console.log(`Resized to ${width}x${height}`);
+      
+      // Inject overflow detector after a delay
+      setTimeout(() => {
+        try {
+          frame.contentWindow.postMessage({ type: 'injectDetector' }, '*');
+        } catch(e) {
+          console.log('Cannot inject - cross-origin restriction');
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

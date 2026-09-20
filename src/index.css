@@ -10,8 +10,8 @@
   --color-cream: #faf8f4;
   --color-sand: #f3eee7;
   --color-stone2: #e8e5e1;
-  --font-display: "Arkan ABC Favorit", system-ui, sans-serif;
-  --font-body: "Arkan ABC Favorit", system-ui, sans-serif;
+  --font-display: "Vazirmatn", "Noto Sans Arabic", "Arkan ABC Favorit", system-ui, sans-serif;
+  --font-body: "Vazirmatn", "Noto Sans Arabic", "Arkan ABC Favorit", system-ui, sans-serif;
 }
 
 @font-face {
@@ -57,6 +57,27 @@
 html {
   scroll-behavior: smooth;
   direction: rtl;
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
+
+/* Support for dynamic viewport height */
+@supports (min-height: 100dvh) {
+  :root {
+    --full-vh: 100dvh;
+  }
+}
+@supports not (min-height: 100dvh) {
+  :root {
+    --full-vh: 100vh;
+  }
 }
 
 body {
@@ -66,6 +87,31 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Global reset for media to prevent overflow */
+img, video, svg, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Touch action for better mobile interaction */
+button, a, input, textarea {
+  touch-action: manipulation;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid #ff5a00;
+  outline-offset: 2px;
+}
+
+/* Text wrap optimization for headings */
+h1, h2, h3, h4 {
+  text-wrap: balance;
 }
 
 h1, h2, h3, h4, .font-display {
@@ -198,7 +244,7 @@ h1, h2, h3, h4, .font-display {
   content: "";
   position: absolute;
   bottom: -6px;
-  right: 0;
+  inset-inline-end: 0;
   width: 0;
   height: 2.5px;
   border-radius: 99px;
@@ -217,8 +263,10 @@ h1, h2, h3, h4, .font-display {
 .zoom-img img {
   transition: transform 1.1s cubic-bezier(0.22,1,0.36,1);
 }
-.zoom-img:hover img {
-  transform: scale(1.07);
+@media (hover: hover) and (pointer: fine) {
+  .zoom-img:hover img {
+    transform: scale(1.07);
+  }
 }
 
 /* orange button shine */
@@ -232,11 +280,20 @@ h1, h2, h3, h4, .font-display {
   top: 0;
   bottom: 0;
   width: 40%;
-  right: -60%;
+  inset-inline-end: -60%;
   background: linear-gradient(to left, transparent, rgba(255,255,255,0.35), transparent);
   transform: skewX(18deg);
-  transition: right 0.7s ease;
+  transition: inset-inline-end 0.7s ease;
 }
-.btn-shine:hover::before {
-  right: 130%;
+@media (hover: hover) and (pointer: fine) {
+  .btn-shine:hover::before {
+    inset-inline-end: 130%;
+  }
+}
+
+/* Wrap hover effects for touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .zoom-img:hover img {
+    transform: scale(1.07);
+  }
 }
