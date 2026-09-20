@@ -1,0 +1,7 @@
+[build]
+  command = "npm install --include=dev && npm run build"
+
+[build.environment]
+  NPM_FLAGS = "--include=dev"
+  NPM_CONFIG_INCLUDE = "dev"
+  NPM_CONFIG_PRODUCTION = "false"
