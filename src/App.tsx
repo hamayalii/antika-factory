@@ -275,7 +275,7 @@ function Header({
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
-            </a>
+            </a>antika-factory
             <button
               ref={menuButtonRef}
               onClick={() => setOpen(!open)}
@@ -1104,7 +1104,7 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
                     <Mail className="h-4 w-4" />
                   </span>
-                  <span className="text-white/80" dir="ltr">info@artix.com</span>
+                  <span className="text-white/80" dir="ltr">info@antika-factory.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
