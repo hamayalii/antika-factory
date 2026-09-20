@@ -350,7 +350,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="hero-section relative overflow-hidden bg-cream pt-28 sm:pt-32 lg:pt-36"
+      className="hero-section relative overflow-hidden bg-cream pt-24 pb-4 sm:pt-32 sm:pb-4 lg:pt-36 lg:pb-0"
       style={{ 
         scrollMarginTop: '80px'
       }}
@@ -361,26 +361,26 @@ function Hero() {
       <div className="pointer-events-none absolute -top-24 left-1/3 h-72 w-72 rounded-full bg-brand/10 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 translate-x-1/3 translate-y-1/3 rounded-full bg-brand blur-[1px]" />
       {/* bottom-right orange corner like reference */}
-      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] bg-brand sm:h-44 sm:w-44" />
-      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] border border-white/20 sm:h-44 sm:w-44" />
+      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] bg-brand hidden sm:block sm:h-44 sm:w-44" />
+      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] border border-white/20 hidden sm:block sm:h-44 sm:w-44" />
 
-      <div className="relative mx-auto grid max-w-7xl items-start gap-10 px-4 pb-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pb-0">
+      <div className="relative mx-auto grid max-w-7xl items-start gap-6 px-4 pb-2 sm:gap-10 sm:px-6 sm:pb-4 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pb-0">
         {/* TEXT — RIGHT side (first in DOM for RTL) */}
-        <div className="relative z-10 text-right">
+        <div className="relative z-10 mx-auto max-w-md text-center sm:mx-0 sm:max-w-none sm:text-right">
           <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand/25 bg-white/70 py-1.5 pl-4 pr-1.5 backdrop-blur">
-              <span className="rounded-full bg-brand px-3 py-1 text-[12px] font-bold text-white">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-brand/25 bg-white/70 py-1 pl-3 pr-1 sm:gap-2 sm:py-1.5 sm:pl-4 sm:pr-1.5 backdrop-blur">
+              <span className="rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-white sm:px-3 sm:py-1 sm:text-[12px]">
                 لەگەڵ ئێمەدا
               </span>
-              <span className="text-[13px] font-semibold text-brand">
+              <span className="text-[11px] font-semibold text-brand sm:text-[13px]">
                 شوێنەکەت بە شێوازێکی جیاواز و مۆدێرن ڕێکبخە
               </span>
-              <span className="h-2 w-2 animate-pulse rounded-full bg-brand" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand sm:h-2 sm:w-2" />
             </div>
           </Reveal>
 
           <Reveal delay={100}>
-            <h1 className="mt-6 font-display font-black leading-[1.15] text-charcoal" style={{ fontSize: 'clamp(32px, 5vw, 76px)' }}>
+            <h1 className="mt-6 font-display font-black leading-[1.15] text-charcoal sm:mt-6" style={{ fontSize: 'clamp(48px, 9.6vw, 76px)' }}>
               هونەر، دیزاین و
               <span className="relative mt-1 block text-brand">
                 ئەندازیاری
@@ -401,29 +401,29 @@ function Hero() {
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="mx-0 mt-7 max-w-[520px] text-[15.5px] font-light leading-8 text-charcoal/65 sm:text-[17px] sm:leading-9">
+            <p className="mx-auto mt-7 max-w-[90%] px-4 text-[19px] font-light leading-[2.2] text-charcoal/65 text-center sm:mx-0 sm:max-w-[520px] sm:px-0 sm:text-right sm:text-[17px] sm:leading-9">
              تێکەڵکردن و وردبینی ئەندازیاری و داهێنانی هونەری بۆ بەدیهێنانی پرۆژەی ناوازە
              "ئەنتیکا، تێکەڵەیەک لە هونەر و تەلارسازیی هاوچەرخ"
             </p>
           </Reveal>
 
           <Reveal delay={300}>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 w-full sm:flex-row sm:justify-start sm:gap-4 sm:w-auto sm:max-w-none">
               <a
                 href="#works"
-                className="btn-shine inline-flex items-center gap-2.5 rounded-full bg-brand px-8 py-4 text-[15px] font-bold text-white shadow-[0_18px_40px_-12px_rgba(255,90,0,0.65)] transition-all hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_24px_48px_-12px_rgba(255,90,0,0.7)] active:translate-y-0"
+                className="btn-shine inline-flex items-center justify-center gap-2.5 rounded-full bg-brand px-10 py-5 text-[17px] font-bold text-white shadow-[0_18px_40px_-12px_rgba(255,90,0,0.65)] transition-all hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_24px_48px_-12px_rgba(255,90,0,0.7)] active:translate-y-0 w-full sm:w-auto sm:min-w-0 sm:gap-2.5 sm:px-8 sm:py-4 sm:text-[15px]"
               >
                 بینینی کارەکانمان
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-white/20">
-                  <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 sm:h-6 sm:w-6">
+                  <ArrowLeft className="h-5 w-5 sm:h-4 sm:w-4" strokeWidth={2.5} />
                 </span>
               </a>
               <a
                 href="#about"
-                className="inline-flex items-center gap-3 rounded-full border border-charcoal/20 bg-white/70 px-7 py-4 text-[15px] font-bold text-charcoal backdrop-blur transition-all hover:-translate-y-1 hover:border-charcoal hover:bg-white"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-charcoal/20 bg-white/70 px-10 py-5 text-[17px] font-bold text-charcoal backdrop-blur transition-all hover:-translate-y-1 hover:border-charcoal hover:bg-white w-full sm:w-auto sm:min-w-0 sm:gap-3 sm:px-8 sm:py-4 sm:text-[15px]"
               >
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-charcoal text-white">
-                  <Play className="h-3.5 w-3.5 fill-current" />
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-charcoal text-white sm:h-7 sm:w-7">
+                  <Play className="h-4 w-4 fill-current sm:h-3.5 sm:w-3.5" />
                 </span>
                 دەربارەی ئێمە
               </a>
@@ -431,13 +431,13 @@ function Hero() {
           </Reveal>
 
           <Reveal delay={400}>
-            <div className="mt-10 flex items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between sm:gap-6">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-4">
                 <div className="flex -space-x-3 space-x-reverse">
                   {["KA", "RA", "MO"].map((t, i) => (
                     <span
                       key={t}
-                      className={`grid h-10 w-10 place-items-center rounded-full border-2 border-cream text-[11px] font-bold text-white ${
+                      className={`grid h-14 w-14 place-items-center rounded-full border-2 border-cream text-[15px] font-bold text-white sm:h-10 sm:w-10 sm:text-[11px] ${
                         i === 0
                           ? "bg-charcoal"
                           : i === 1
@@ -448,16 +448,17 @@ function Hero() {
                       {t}
                     </span>
                   ))}
-                  <span className="grid h-10 w-10 place-items-center rounded-full border-2 border-cream bg-white text-[11px] font-bold text-charcoal shadow">
+                  <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-cream bg-white text-[15px] font-bold text-charcoal shadow sm:h-10 sm:w-10 sm:text-[11px]">
                     +300
                   </span>
                 </div>
-                <div className="text-[13px] leading-5 text-charcoal/60">
-                  <span className="flex items-center gap-1 font-bold text-charcoal">
-                    <Star className="h-3.5 w-3.5 fill-brand text-brand" />
+                <div className="text-[15px] leading-6 text-charcoal/70 text-center sm:text-left sm:text-[13px] sm:leading-5">
+                  <span className="flex items-center gap-1 font-bold text-charcoal text-[16px]">
+                    <Star className="h-5 w-5 fill-brand text-brand" />
                     4.9
                   </span>
-                  جێگەی متمانەی زیاتر لە ٣٠٠ کڕیار
+                  <span className="sm:hidden">جێگەی متمانەی زیاتر لە ٣٠٠ کڕیار</span>
+                  <span className="hidden sm:inline">جێگەی متمانەی زیاتر لە ٣٠٠ کڕیار</span>
                 </div>
               </div>
              
@@ -466,7 +467,7 @@ function Hero() {
         </div>
 
         {/* VISUAL — LEFT side */}
-        <div className="relative z-10 mx-auto w-full max-w-[620px]">
+        <div className="relative z-10 mx-auto w-full max-w-[620px] hidden sm:block">
           <Reveal delay={150} className="relative">
             <div className="relative">
               {/* Big orange arch behind */}
@@ -548,7 +549,7 @@ function Hero() {
       {/* leaves foreground similar to ref */}
       <svg
         viewBox="0 0 100 100"
-        className="pointer-events-none absolute -left-6 bottom-10 h-40 w-40 text-[#1d3a1f] opacity-90"
+        className="pointer-events-none absolute -left-6 bottom-10 h-40 w-40 text-[#1d3a1f] opacity-90 hidden sm:block"
         fill="currentColor"
       >
         <path d="M10 90 C 20 50, 50 20, 90 10 C 80 50, 50 80, 10 90 Z" opacity="0.9" />
