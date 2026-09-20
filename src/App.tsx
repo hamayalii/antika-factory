@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  ArrowDown,
   ArrowLeft,
   ArrowUp,
   ArrowUpLeft,
@@ -95,21 +94,21 @@ function Reveal({
 /* ---------------------------------- Logo ---------------------------------- */
 function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <a href="#home" className="flex items-center gap-3 shrink-0 group">
-      <span className="relative grid h-16 w-16 place-items-center">
+    <a href="#home" className="flex items-center gap-2 group">
+      <span className="relative grid h-12 w-12 shrink-0 place-items-center sm:h-16 sm:w-16">
         <img
           src="/images/logo.png"
           alt="ANTIKA FACTORY"
-          className="h-14 w-14 object-contain"
+          className="h-10 w-10 object-contain sm:h-14 sm:w-14"
           style={{ mixBlendMode: 'multiply' }}
           width="56"
           height="56"
           fetchPriority="high"
         />
       </span>
-      <span className="leading-none text-right">
+      <span className="leading-none text-right hidden sm:block">
         <span
-          className={`block font-display text-[20px] font-800 font-extrabold ${
+          className={`block font-display text-[18px] font-800 font-extrabold sm:text-[20px] ${
             dark ? "text-white" : "text-charcoal"
           }`}
           style={{ fontWeight: 800 }}
@@ -117,7 +116,7 @@ function Logo({ dark = false }: { dark?: boolean }) {
           کارگەی ئەنتیکا
         </span>
         <span
-          className={`mt-1 block text-[11px] font-medium ${
+          className={`mt-1 block text-[10px] font-medium sm:text-[11px] ${
             dark ? "text-white/60" : "text-charcoal/55"
           }`}
         >
@@ -149,6 +148,7 @@ function Header({
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
+  const scrollPosition = useRef(0);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -160,14 +160,12 @@ function Header({
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (open) {
+      scrollPosition.current = window.scrollY;
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
       previousActiveElement.current = document.activeElement as HTMLElement;
     } else {
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
+      window.scrollTo(0, scrollPosition.current);
       // Return focus to menu button when closing
       if (previousActiveElement.current) {
         previousActiveElement.current.focus();
@@ -175,8 +173,6 @@ function Header({
     }
     return () => {
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
     };
   }, [open]);
 
@@ -259,7 +255,7 @@ function Header({
                 key={n.id}
                 href={`#${n.id}`}
                 onClick={() => onNav(n.id)}
-                className={`nav-link px-2 py-3 text-[14.5px] font-semibold transition-colors ${
+                className={`nav-link text-[14.5px] font-semibold transition-colors ${
                   active === n.id
                     ? "active"
                     : "text-charcoal/75 hover:text-charcoal"
@@ -271,11 +267,11 @@ function Header({
           </nav>
 
           {/* CTA LEFT */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <a
               href="#contact"
               onClick={() => onNav("contact")}
-              className="btn-shine hidden items-center gap-2 rounded-full bg-brand px-6 py-3 text-[14px] font-bold text-white shadow-[0_12px_28px_-10px_rgba(255,90,0,0.6)] transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_18px_34px_-10px_rgba(255,90,0,0.65)] sm:inline-flex"
+              className="btn-shine hidden items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_12px_28px_-10px_rgba(255,90,0,0.6)] transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_18px_34px_-10px_rgba(255,90,0,0.65)] sm:inline-flex sm:px-6 sm:py-3 sm:text-[14px]"
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
@@ -283,11 +279,10 @@ function Header({
             <button
               ref={menuButtonRef}
               onClick={() => setOpen(!open)}
-              aria-label="مێنیو"
+              aria-label={open ? "داخستنی مێنیو" : "کردنەوەی مێنیو"}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              aria-haspopup="true"
-              className="grid h-12 w-12 place-items-center rounded-full border border-charcoal/15 bg-white/80 text-charcoal backdrop-blur transition hover:border-brand hover:text-brand lg:hidden"
+              className="grid h-11 w-11 place-items-center rounded-full border border-charcoal/15 bg-white/80 text-charcoal backdrop-blur transition hover:border-brand hover:text-brand lg:hidden sm:h-12 sm:w-12"
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -355,10 +350,9 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-cream pt-28 sm:pt-32 lg:pt-36"
+      className="hero-section relative overflow-hidden bg-cream pt-28 sm:pt-32 lg:pt-36"
       style={{ 
-        scrollMarginTop: '80px',
-        minHeight: 'var(--full-vh, 100vh)'
+        scrollMarginTop: '80px'
       }}
     >
       {/* faint blueprint on right */}
@@ -592,7 +586,7 @@ function Features() {
   return (
     <section className="relative bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <div className="grid gap-y-8 py-10 sm:grid-cols-2 sm:py-12 lg:grid-cols-4 lg:divide-x lg:divide-x-reverse lg:divide-[#E8E5E1] lg:border-x lg:border-x-reverse lg:border-[#E8E5E1] lg:py-14" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+        <div className="grid gap-y-8 py-10 sm:grid-cols-2 sm:py-12 lg:grid-cols-4 lg:divide-x lg:divide-x-reverse lg:divide-[#E8E5E1] lg:border-x lg:border-x-reverse lg:border-[#E8E5E1] lg:py-14">
           {FEATURES.map((f, i) => (
             <Reveal key={f.title} delay={i * 100}>
               <div className="group flex items-start gap-4 px-2 lg:px-7">
@@ -707,7 +701,7 @@ function Works() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3 md:gap-7" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+        <div className="mt-10 grid gap-6 md:grid-cols-3 md:gap-7">
           {filtered.map((w, i) => (
             <Reveal key={w.id} delay={i * 120}>
               <article className="group overflow-hidden rounded-[1.75rem] bg-white shadow-[0_20px_60px_-25px_rgba(23,23,23,0.25)] ring-1 ring-black/5 transition-all duration-500">
@@ -720,7 +714,6 @@ function Works() {
                     decoding="async"
                     width="400"
                     height="300"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <span className="absolute right-4 top-4 rounded-full bg-white/85 px-4 py-1.5 text-[12px] font-bold text-charcoal backdrop-blur">
@@ -837,7 +830,7 @@ function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
             <Reveal key={s.n} delay={(i % 3) * 100}>
               <div className="group relative h-full overflow-hidden rounded-[1.5rem] border border-[#EDE8E1] bg-cream p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-brand/40 hover:bg-white hover:shadow-[0_30px_60px_-20px_rgba(255,90,0,0.25)]">
@@ -951,7 +944,6 @@ function About() {
                   decoding="async"
                   width="600"
                   height="480"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
                 />
               </div>
               <div className="absolute -bottom-6 -right-4 hidden w-56 overflow-hidden rounded-2xl border-4 border-cream shadow-2xl sm:block lg:-right-8">
@@ -963,7 +955,6 @@ function About() {
                   decoding="async"
                   width="224"
                   height="160"
-                  sizes="(max-width: 640px) 100vw, 224px"
                 />
               </div>
               <div className="absolute -left-3 top-6 rounded-2xl bg-brand px-5 py-4 text-white shadow-[0_18px_40px_-12px_rgba(255,90,0,0.7)] sm:-left-6">
@@ -976,10 +967,6 @@ function About() {
       </div>
     </section>
   );
-}
-
-/* --------------------------------- Process --------------------------------- */
-function Process() {
 }
 
 /* ------------------------------- Testimonials ------------------------------- */
@@ -1070,7 +1057,7 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
       <div className="pointer-events-none absolute left-1/4 top-10 h-40 w-40 rounded-full bg-brand/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <div className="grid gap-10 pb-12 lg:grid-cols-[1.15fr_1fr_0.9fr_1.15fr] lg:gap-8" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+        <div className="grid gap-10 pb-12 lg:grid-cols-[1.15fr_1fr_0.9fr_1.15fr] lg:gap-8">
           {/* 1 BRAND — rightmost */}
           <Reveal>
             <div className="text-right">
@@ -1293,7 +1280,6 @@ export default function App() {
         <Works />
         <Services />
         <About />
-        <Process />
         <Testimonials />
       </main>
       <Footer onNav={setActive} />

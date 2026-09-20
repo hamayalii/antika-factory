@@ -69,14 +69,12 @@ html {
 }
 
 /* Support for dynamic viewport height */
-@supports (min-height: 100dvh) {
-  :root {
-    --full-vh: 100dvh;
-  }
+.hero-section {
+  min-height: 100vh;
 }
-@supports not (min-height: 100dvh) {
-  :root {
-    --full-vh: 100vh;
+@supports (min-height: 100svh) {
+  .hero-section {
+    min-height: 100svh;
   }
 }
 
@@ -84,11 +82,8 @@ body {
   font-family: var(--font-body);
   background: var(--color-cream);
   color: var(--color-charcoal);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 
 /* Global reset for media to prevent overflow */
