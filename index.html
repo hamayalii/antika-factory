@@ -3,9 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Antika Factory" />
+    <meta name="description" content="ANTIKA FACTORY - کارگەی ئەنتیکا: تێکەڵەیەک لە هونەر، دیزاین و ئەندازیاری. دیزاینی کەپسولە، ڕەفە، لایت و سیستەمی نوێی بۆ ماڵ و بازرگانی. سلێمانی، عێراق." />
     <meta name="theme-color" content="#ff5a00" />
-    <title>Antika Factory | هونەر، دیزاین و ئەندازیاری</title>
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ANTIKA FACTORY | هونەر، دیزاین و ئەندازیاری" />
+    <meta property="og:description" content="کارگەی ئەنتیکا: تێکەڵەیەک لە هونەر، دیزاین و ئەندازیاری. دیزاینی کەپسولە، ڕەفە، لایت و سیستەمی نوێی بۆ ماڵ و بازرگانی." />
+    <meta property="og:image" content="/images/logo.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ANTIKA FACTORY | هونەر، دیزاین و ئەندازیاری" />
+    <meta name="twitter:description" content="کارگەی ئەنتیکا: تێکەڵەیەک لە هونەر، دیزاین و ئەندازیاری." />
+    <meta name="twitter:image" content="/images/logo.png" />
+    
+    <title>ANTIKA FACTORY | هونەر، دیزاین و ئەندازیاری</title>
+    
+    <!-- Preconnect to fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@200;300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" as="style" />
@@ -13,9 +29,56 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@200;300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- Favicon -->
     <link rel="apple-touch-icon" href="/images/logo.png" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    
+    <!-- Skip to content for accessibility -->
+    <style>
+      .skip-to-content {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #ff5a00;
+        color: white;
+        padding: 8px;
+        z-index: 100;
+        transition: top 0.3s;
+      }
+      .skip-to-content:focus {
+        top: 0;
+      }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ANTIKA FACTORY",
+      "alternateName": "کارگەی ئەنتیکا",
+      "description": "تێکەڵەیەک لە هونەر، دیزاین و ئەندازیاری. دیزاینی کەپسولە، ڕەفە، لایت و سیستەمی نوێی بۆ ماڵ و بازرگانی.",
+      "url": "https://antika-factory.netlify.app",
+      "logo": "https://antika-factory.netlify.app/images/logo.png",
+      "email": "info@antika-factory.com",
+      "telephone": "+9647501234567",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sulaymaniyah",
+        "addressCountry": "Iraq"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    }
+    </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">بازدان بۆ ناوەڕۆک</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

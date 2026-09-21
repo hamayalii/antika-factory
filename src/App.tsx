@@ -3,7 +3,6 @@ import {
   ArrowLeft,
   ArrowUp,
   ArrowUpLeft,
-  Box,
   Brush,
   Check,
   Clock,
@@ -11,7 +10,6 @@ import {
   DraftingCompass,
   Factory,
   House,
-  Leaf,
   Mail,
   MapPin,
   Menu,
@@ -25,8 +23,9 @@ import {
   Sparkles,
   Star,
   X,
+  MessageCircle,
+  PhoneCall,
 } from "lucide-react";
-import SuspendedCabinCrane from "./components/SuspendedCabinCrane";
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -108,17 +107,15 @@ function Logo({ dark = false }: { dark?: boolean }) {
       </span>
       <span className="leading-none text-right hidden sm:block">
         <span
-          className={`block font-display text-[18px] font-800 font-extrabold sm:text-[20px] ${
-            dark ? "text-white" : "text-charcoal"
-          }`}
+          className={`block font-display text-[18px] font-800 font-extrabold sm:text-[20px] ${dark ? "text-white" : "text-charcoal"
+            }`}
           style={{ fontWeight: 800 }}
         >
           کارگەی ئەنتیکا
         </span>
         <span
-          className={`mt-1 block text-[10px] font-medium sm:text-[11px] ${
-            dark ? "text-white/60" : "text-charcoal/55"
-          }`}
+          className={`mt-1 block text-[10px] font-medium sm:text-[11px] ${dark ? "text-white/60" : "text-charcoal/55"
+            }`}
         >
           ئەندازیاری • هونەری • دیکۆر
         </span>
@@ -166,7 +163,6 @@ function Header({
     } else {
       document.body.style.overflow = '';
       window.scrollTo(0, scrollPosition.current);
-      // Return focus to menu button when closing
       if (previousActiveElement.current) {
         previousActiveElement.current.focus();
       }
@@ -188,7 +184,7 @@ function Header({
 
     const handleTab = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
-      
+
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
           e.preventDefault();
@@ -208,7 +204,6 @@ function Header({
       }
     };
 
-    // Focus first element when menu opens
     setTimeout(() => firstElement?.focus(), 100);
 
     document.addEventListener('keydown', handleTab);
@@ -225,8 +220,8 @@ function Header({
     if (!open) return;
 
     const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node) && 
-          menuButtonRef.current && !menuButtonRef.current.contains(e.target as Node)) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node) &&
+        menuButtonRef.current && !menuButtonRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -237,14 +232,8 @@ function Header({
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
-        <div
-          className={`mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl px-4 py-3 transition-all duration-500 sm:px-6 ${
-            scrolled
-              ? "bg-cream/85 shadow-[0_18px_50px_-20px_rgba(23,23,23,0.25)] ring-1 ring-black/5 backdrop-blur-xl"
-              : "bg-transparent"
-          }`}
-        >
+      <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           {/* Logo RIGHT (first in RTL) */}
           <Logo />
 
@@ -255,11 +244,10 @@ function Header({
                 key={n.id}
                 href={`#${n.id}`}
                 onClick={() => onNav(n.id)}
-                className={`nav-link text-[14.5px] font-semibold transition-colors ${
-                  active === n.id
-                    ? "active"
-                    : "text-charcoal/75 hover:text-charcoal"
-                }`}
+                className={`nav-link text-[14.5px] font-semibold transition-colors ${active === n.id
+                  ? "active"
+                  : "text-gray-600 hover:text-gray-900"
+                  }`}
               >
                 {n.label}
               </a>
@@ -271,18 +259,18 @@ function Header({
             <a
               href="#contact"
               onClick={() => onNav("contact")}
-              className="btn-shine hidden items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_12px_28px_-10px_rgba(255,90,0,0.6)] transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_18px_34px_-10px_rgba(255,90,0,0.65)] sm:inline-flex sm:px-6 sm:py-3 sm:text-[14px]"
+              className="hidden items-center gap-2 rounded-full bg-brand px-6 py-3 text-[14px] font-bold text-white transition hover:bg-brand-dark sm:inline-flex"
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
-            </a>antika-factory
+            </a>
             <button
               ref={menuButtonRef}
               onClick={() => setOpen(!open)}
               aria-label={open ? "داخستنی مێنیو" : "کردنەوەی مێنیو"}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="grid h-11 w-11 place-items-center rounded-full border border-charcoal/15 bg-white/80 text-charcoal backdrop-blur transition hover:border-brand hover:text-brand lg:hidden sm:h-12 sm:w-12"
+              className="grid h-11 w-11 place-items-center rounded-full border border-gray-200 bg-white text-gray-700 transition hover:border-brand hover:text-brand lg:hidden sm:h-12 sm:w-12"
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -296,11 +284,10 @@ function Header({
           role="dialog"
           aria-modal="true"
           aria-label="مێنیوی سەرەکی"
-          className={`mx-auto mt-2 max-w-7xl overflow-hidden rounded-2xl bg-white/95 shadow-2xl ring-1 ring-black/5 backdrop-blur-xl transition-all duration-500 lg:hidden ${
-            open ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`mx-auto max-w-7xl overflow-hidden bg-white shadow-lg transition-all duration-300 lg:hidden ${open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
-          <nav className="flex flex-col p-3">
+          <nav className="flex flex-col p-4">
             {NAV.map((n, i) => (
               <a
                 key={n.id}
@@ -309,7 +296,6 @@ function Header({
                   e.preventDefault();
                   onNav(n.id);
                   setOpen(false);
-                  // Navigate after menu closes
                   setTimeout(() => {
                     const element = document.getElementById(n.id);
                     if (element) {
@@ -317,14 +303,13 @@ function Header({
                     }
                   }, 100);
                 }}
-                className={`flex items-center justify-between rounded-xl px-5 py-4 text-[15px] font-bold transition ${
-                  active === n.id
-                    ? "bg-brand-soft text-brand"
-                    : "text-charcoal/80 hover:bg-sand"
-                }`}
+                className={`flex items-center justify-between rounded-xl px-5 py-4 text-[15px] font-bold transition ${active === n.id
+                  ? "bg-brand-soft text-brand"
+                  : "text-gray-700 hover:bg-gray-50"
+                  }`}
               >
                 {n.label}
-                <span className="text-xs text-charcoal/30">0{i + 1}</span>
+                <span className="text-xs text-gray-400">0{i + 1}</span>
               </a>
             ))}
             <a
@@ -345,273 +330,224 @@ function Header({
   );
 }
 
-/* ---------------------------------- Hero ---------------------------------- */
+/* ---------------------------------- Hero Slider ---------------------------------- */
+const HERO_SLIDES = [
+  {
+    tag: "لەگەڵ ئێمەدا",
+    title: "هونەر، دیزاین و ئەندازیاری",
+    desc: "تێکەڵکردن و وردبینی ئەندازیاری و داهێنانی هونەری بۆ بەدیهێنانی پرۆژەی ناوازە",
+    img: "/images/work-capsule.png",
+    cta1: "بینینی کارەکانمان",
+    cta2: "دەربارەی ئێمە",
+  },
+  {
+    tag: "کوالێتی بەرز",
+    title: "دیزاینی مۆدێرن",
+    desc: "ئەنتیکا، تێکەڵەیەک لە هونەر و تەلارسازیی هاوچەرخ",
+    img: "/images/capsule-1.jpg",
+    cta1: "خزمەتگوزارییەکان",
+    cta2: "پەیوەندی",
+  },
+];
+
 function Hero() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [paused]);
+
+  const next = () => setCurrent((prev) => (prev + 1) % HERO_SLIDES.length);
+  const prev = () => setCurrent((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+
+  const slide = HERO_SLIDES[current];
+
   return (
     <section
       id="home"
-      className="hero-section relative overflow-hidden bg-cream pt-24 pb-4 sm:pt-32 sm:pb-4 lg:pt-36 lg:pb-0"
-      style={{ 
-        scrollMarginTop: '80px'
-      }}
+      className="hero-section relative overflow-hidden bg-gray-50 pt-24"
+      style={{ scrollMarginTop: '80px' }}
     >
-      {/* faint blueprint on right */}
-      <div className="bg-blueprint pointer-events-none absolute inset-0 opacity-60 [mask-image:linear-gradient(to_left,black_20%,transparent_70%)]" />
-      {/* soft blobs */}
-      <div className="pointer-events-none absolute -top-24 left-1/3 h-72 w-72 rounded-full bg-brand/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 translate-x-1/3 translate-y-1/3 rounded-full bg-brand blur-[1px]" />
-      {/* bottom-right orange corner like reference */}
-      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] bg-brand hidden sm:block sm:h-44 sm:w-44" />
-      <div className="pointer-events-none absolute -bottom-6 -left-10 h-36 w-36 rounded-tr-[3rem] border border-white/20 hidden sm:block sm:h-44 sm:w-44" />
-
-      <div className="relative mx-auto grid max-w-7xl items-start gap-6 px-4 pb-2 sm:gap-10 sm:px-6 sm:pb-4 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pb-0">
-        {/* TEXT — RIGHT side (first in DOM for RTL) */}
-        <div className="relative z-10 mx-auto max-w-md text-center sm:mx-0 sm:max-w-none sm:text-right">
-          <Reveal>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-brand/25 bg-white/70 py-1 pl-3 pr-1 sm:gap-2 sm:py-1.5 sm:pl-4 sm:pr-1.5 backdrop-blur">
-              <span className="rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-white sm:px-3 sm:py-1 sm:text-[12px]">
-                لەگەڵ ئێمەدا
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Text Content */}
+          <div className="text-center lg:text-right">
+            <Reveal>
+              <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand">
+                {slide.tag}
               </span>
-              <span className="text-[11px] font-semibold text-brand sm:text-[13px]">
-                شوێنەکەت بە شێوازێکی جیاواز و مۆدێرن ڕێکبخە
-              </span>
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand sm:h-2 sm:w-2" />
-            </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <h1 className="mt-6 font-display font-black leading-[1.15] text-charcoal sm:mt-6" style={{ fontSize: 'clamp(48px, 9.6vw, 76px)' }}>
-              هونەر، دیزاین و
-              <span className="relative mt-1 block text-brand">
-                ئەندازیاری
-                <svg
-                  viewBox="0 0 320 22"
-                  className="absolute -bottom-2 right-[-65px] h-4 w-[68%] text-brand/30"
-                  fill="none"
+            </Reveal>
+            <Reveal delay={100}>
+              <h1 className="mt-6 font-display font-black leading-[1.2] text-gray-900" style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
+                {slide.title}
+              </h1>
+            </Reveal>
+            <Reveal delay={200}>
+              <p className="mt-6 text-[17px] font-light leading-relaxed text-gray-600 lg:text-[19px]">
+                {slide.desc}
+              </p>
+            </Reveal>
+            <Reveal delay={300}>
+              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                <a
+                  href="#works"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-[15px] font-bold text-white transition hover:bg-brand-dark w-full sm:w-auto"
                 >
-                  <path
-                    d="M4 16 C 80 6, 220 6, 316 12"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={200}>
-            <p className="mx-auto mt-7 max-w-[90%] px-4 text-[19px] font-light leading-[2.2] text-charcoal/65 text-center sm:mx-0 sm:max-w-[520px] sm:px-0 sm:text-right sm:text-[17px] sm:leading-9">
-             تێکەڵکردن و وردبینی ئەندازیاری و داهێنانی هونەری بۆ بەدیهێنانی پرۆژەی ناوازە
-             "ئەنتیکا، تێکەڵەیەک لە هونەر و تەلارسازیی هاوچەرخ"
-            </p>
-          </Reveal>
-
-          <Reveal delay={300}>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 w-full sm:flex-row sm:justify-start sm:gap-4 sm:w-auto sm:max-w-none">
-              <a
-                href="#works"
-                className="btn-shine inline-flex items-center justify-center gap-2.5 rounded-full bg-brand px-10 py-5 text-[17px] font-bold text-white shadow-[0_18px_40px_-12px_rgba(255,90,0,0.65)] transition-all hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_24px_48px_-12px_rgba(255,90,0,0.7)] active:translate-y-0 w-full sm:w-auto sm:min-w-0 sm:gap-2.5 sm:px-8 sm:py-4 sm:text-[15px]"
-              >
-                بینینی کارەکانمان
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 sm:h-6 sm:w-6">
-                  <ArrowLeft className="h-5 w-5 sm:h-4 sm:w-4" strokeWidth={2.5} />
-                </span>
-              </a>
-              <a
-                href="#about"
-                className="inline-flex items-center justify-center gap-3 rounded-full border border-charcoal/20 bg-white/70 px-10 py-5 text-[17px] font-bold text-charcoal backdrop-blur transition-all hover:-translate-y-1 hover:border-charcoal hover:bg-white w-full sm:w-auto sm:min-w-0 sm:gap-3 sm:px-8 sm:py-4 sm:text-[15px]"
-              >
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-charcoal text-white sm:h-7 sm:w-7">
-                  <Play className="h-4 w-4 fill-current sm:h-3.5 sm:w-3.5" />
-                </span>
-                دەربارەی ئێمە
-              </a>
-            </div>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between sm:gap-6">
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-4">
-                <div className="flex -space-x-3 space-x-reverse">
-                  {["KA", "RA", "MO"].map((t, i) => (
-                    <span
-                      key={t}
-                      className={`grid h-14 w-14 place-items-center rounded-full border-2 border-cream text-[15px] font-bold text-white sm:h-10 sm:w-10 sm:text-[11px] ${
-                        i === 0
-                          ? "bg-charcoal"
-                          : i === 1
-                            ? "bg-brand"
-                            : "bg-[#2b2b2b]"
-                      }`}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                  <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-cream bg-white text-[15px] font-bold text-charcoal shadow sm:h-10 sm:w-10 sm:text-[11px]">
-                    +300
-                  </span>
-                </div>
-                <div className="text-[15px] leading-6 text-charcoal/70 text-center sm:text-left sm:text-[13px] sm:leading-5">
-                  <span className="flex items-center gap-1 font-bold text-charcoal text-[16px]">
-                    <Star className="h-5 w-5 fill-brand text-brand" />
-                    4.9
-                  </span>
-                  <span className="sm:hidden">جێگەی متمانەی زیاتر لە ٣٠٠ کڕیار</span>
-                  <span className="hidden sm:inline">جێگەی متمانەی زیاتر لە ٣٠٠ کڕیار</span>
-                </div>
+                  {slide.cta1}
+                  <ArrowLeft className="h-4 w-4" />
+                </a>
+                <a
+                  href="#about"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-4 text-[15px] font-bold text-gray-900 transition hover:border-brand hover:text-brand w-full sm:w-auto"
+                >
+                  {slide.cta2}
+                </a>
               </div>
-             
-            </div>
-          </Reveal>
-        </div>
+            </Reveal>
+          </div>
 
-        {/* VISUAL — LEFT side */}
-        <div className="relative z-10 mx-auto w-full max-w-[620px] hidden sm:block">
+          {/* Image */}
           <Reveal delay={150} className="relative">
-            <div className="relative">
-              {/* Big orange arch behind */}
-              <div className="absolute left-1/2 top-1/2 -z-0 h-[100%] w-[92%] -translate-x-1/2 -translate-y-1/2 overflow-hidden">
-                <div className="absolute inset-x-4 top-6 bottom-0 rounded-t-[999px] rounded-b-[3rem] bg-gradient-to-b from-[#FF6A1A] via-[#FF5A00] to-[#E04A00] shadow-[0_40px_80px_-30px_rgba(255,90,0,0.5)]" />
-                {/* arch inner highlight */}
-                <div className="absolute inset-x-8 top-10 bottom-4 rounded-t-[999px] rounded-b-[2.5rem] border border-white/25" />
-                {/* blueprint lines on arch */}
-                <div className="bg-blueprint-light absolute inset-0 opacity-40" />
-              </div>
-
-              {/* rotating dashed ring */}
-              <div className="animate-spin-slower absolute -left-4 top-8 h-28 w-28 rounded-full border-2 border-dashed border-brand/40" />
-              <div className="animate-drift absolute -right-3 top-16 hidden h-16 w-16 rounded-2xl bg-white/80 shadow-lg ring-1 ring-black/5 backdrop-blur sm:grid place-items-center">
-                <DraftingCompass className="h-7 w-7 text-brand" />
-              </div>
-
-              {/* Main image - now inside Reveal but with proper layering */}
-              <div className="relative z-30 px-6 pb-0 pt-14 sm:px-10">
-                <div className="relative min-h-[400px] sm:min-h-[500px] lg:min-h-[550px]">
-                  <div className="-ml-32 h-full w-full sm:-ml-40">
-                    <SuspendedCabinCrane
-                      craneImage="/images/crane.png"
-                      cabinImage="/images/cabin.png"
-                      swingAmplitude={20}
-                      swingSpeed={0.1}
-                      damping={3.6}
-                      dragRange={120}
-                      cableColor="#333333"
-                      cableWidth={2}
-                      cabinScale={1.6}
-                      whiteThreshold={35}
-                      showDebug={false}
-                    />
-                  </div>
-                </div>
-              </div>
-
-
-
-              {/* floating cards */}
-              <div className="animate-float-slow absolute -right-2 bottom-68 z-20 hidden rounded-2xl bg-white/90 p-3 pr-4 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)] ring-1 ring-black/5 backdrop-blur sm:flex items-center gap-3">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft">
-                  <Ruler className="h-5 w-5 text-brand" />
-                </span>
-                <span>
-                  <span className="block text-[13px] font-extrabold text-charcoal">
-                    پلانی ئەندازیاری
-                  </span>
-                  <span className="block text-[11px] text-charcoal/55">
-                    وردبینی تا 1mm
-                  </span>
-                </span>
-              </div>
-
-              <div className="animate-float absolute -left-2 bottom-48 z-20 flex items-center gap-3 rounded-2xl bg-charcoal/90 p-3 pl-5 pr-3 text-white shadow-xl backdrop-blur">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand">
-                  <Sparkles className="h-5 w-5 text-white" />
-                </span>
-                <span>
-                  <span className="block text-[13px] font-extrabold">
-                    لە بیرۆکەوە بۆ دیزاین
-                  </span>
-                  <span className="block text-[11px] text-white/60">
-                    لە دیزاینەوە بۆ ڕاستی
-                  </span>
-                </span>
-              </div>
-
-              {/* floor shadow */}
-              <div className="mx-auto mt-2 h-6 w-[70%] rounded-[100%] bg-charcoal/15 blur-xl" />
+            <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
+              <img
+                src={slide.img}
+                alt={slide.title}
+                className="h-[400px] w-full object-cover sm:h-[500px] lg:h-[600px]"
+                width="800"
+                height="600"
+                fetchPriority="high"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
-          </Reveal>
 
-         
+            {/* Slider Controls */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+              {HERO_SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-2 w-2 rounded-full transition ${i === current ? "bg-brand w-8" : "bg-white/50 hover:bg-white"
+                    }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Arrow Controls */}
+            <button
+              onClick={prev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/90 text-gray-900 shadow-lg transition hover:bg-white"
+              aria-label="Previous slide"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-4 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/90 text-gray-900 shadow-lg transition hover:bg-white"
+              aria-label="Next slide"
+            >
+              <ArrowLeft className="h-5 w-5 rotate-180" />
+            </button>
+          </Reveal>
         </div>
       </div>
-
-      {/* leaves foreground similar to ref */}
-      <svg
-        viewBox="0 0 100 100"
-        className="pointer-events-none absolute -left-6 bottom-10 h-40 w-40 text-[#1d3a1f] opacity-90 hidden sm:block"
-        fill="currentColor"
-      >
-        <path d="M10 90 C 20 50, 50 20, 90 10 C 80 50, 50 80, 10 90 Z" opacity="0.9" />
-        <path d="M15 85 L 75 25" stroke="#faf8f4" strokeWidth="1.5" opacity="0.5" />
-      </svg>
     </section>
   );
 }
 
-/* --------------------------------- Features --------------------------------- */
-const FEATURES = [
+/* ---------------------------------- Use Cases Grid ---------------------------------- */
+const USE_CASES = [
   {
-    icon: Diamond,
-    title: "دیزاینی تایبەت",
-    desc: "شوێنەکەت بە ستایلێکی سەردەمیانە و گونجاو لەگەڵ سەلیقەی خۆت نەخشەسازی بۆ دەکرێت",
+    img: "/images/work-capsule.png",
+    title: "کەپسولەکان",
+    desc: "ژیانێکی مۆدێرن لە دیزاینێکی تایبەتدا",
   },
   {
-    icon: House,
-    title: "کەرەستەی نایاب و پێشکەوتوو",
-    desc: "بەرهەمەکانمان بەرزترین ستانداردەکانی دروستکردن و باشترین کەرەستەی سەردەم لەخۆ دەگرن",
+    img: "/images/capsule-1.jpg",
+    title: "کەپسولی کۆفی برەیک",
+    desc: "گۆشەیەکی سەرنجڕاکێش بۆ حەوانەوە، خواردنەوەی قاوە و وەرگرتنی وزەی نوێ لە کاتی ماندوێتی کاردا.",
   },
   {
-    icon: Leaf,
-    title: "داهێنان و جوانی",
-    desc: "تێکەڵکردنی هونەر و ئەندازیاری بۆ بەخشینی ڕۆحێکی تازە، مۆدێرن و سەرنجڕاکێش بە پڕۆژەکانت",
+    img: "/images/capsule-2.jpg",
+    title: "کەپسولی کۆڕ و کۆبوونەوەکان",
+    desc: "ژینگەیەکی بێدەنگکراو (Acoustic) و تایبەت بۆ ئەنجامدانی کۆبوونەوە و گفتوگۆ گرنگەکانت بەبێ تێکچوونی تەرکیز.",
   },
   {
-    icon: Box,
-    title: "کوالێتی بەرز و متمانە",
-    desc: "جێبەجێکردنی پڕۆژەکان بەوپەڕی وردەکارییەوە، لە قۆناغی سەرەتای پلاندانانەوە تا ساتی ڕادەستکردن",
+    img: "/images/capsule-3.jpg",
+    title: "کەپسولی خاڵی فرۆشتن",
+    desc: "دیزاینێکی مۆدێرنی بازرگانی بۆ نمایشکردن و فرۆشتنی ڕاستەوخۆی بەرهەمەکانت بە شێوازێک کە سەرنجی موشتەری ڕابکێشێت.",
+  },
+  {
+    img: "/images/capsule-4.jpg",
+    title: "کەپسولی نوسینگە",
+    desc: "ئۆفیسێکی سەربەخۆ و ئاسوودە بە تەواوی پێداویستییەکانەوە، بۆ زیادکردنی بەرهەمداری و تەرکیزی کارکردن.",
+  },
+  {
+    img: "/images/capsule-5.jpg",
+    title: "کەپسولی کۆشک",
+    desc: "شوێنێکی گواستراوە و مۆدێرن بۆ خزمەتگوزاری کاتی، پێشانگاکان یان ئۆفەری تایبەتی پڕۆژەکەت.",
   },
 ];
 
-function Features() {
+function UseCases() {
   return (
-    <section className="relative bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <div className="grid gap-y-8 py-10 sm:grid-cols-2 sm:py-12 lg:grid-cols-4 lg:divide-x lg:divide-x-reverse lg:divide-[#E8E5E1] lg:border-x lg:border-x-reverse lg:border-[#E8E5E1] lg:py-14">
-          {FEATURES.map((f, i) => (
-            <Reveal key={f.title} delay={i * 100}>
-              <div className="group flex items-start gap-4 px-2 lg:px-7">
-                <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full border-[1.5px] border-brand/60 bg-brand-soft/50 text-brand transition-all duration-300 group-hover:bg-brand group-hover:text-white group-hover:shadow-[0_12px_24px_-8px_rgba(255,90,0,0.6)]">
-                  <f.icon className="h-[22px] w-[22px]" strokeWidth={1.8} />
-                </span>
-                <div>
-                  <h3 className="font-display text-[16px] font-extrabold text-charcoal transition-colors group-hover:text-brand">
-                    {f.title}
-                  </h3>
-                  <p className="mt-1.5 text-[13.5px] font-light leading-6 text-charcoal/60">
-                    {f.desc}
-                  </p>
+    <section className="bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="mb-12 text-center">
+          <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
+            <span className="h-[2px] w-6 rounded bg-brand" />
+            بەرهەمەکانمان لە کوێ بەکارئەهێنرێت؟
+            <span className="h-[2px] w-6 rounded bg-brand" />
+          </span>
+          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+            گونجاو بۆ هەر پڕۆژەیەک کە لە خەیاڵتایە!
+          </h2>
+        </Reveal>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {USE_CASES.map((uc, i) => (
+            <Reveal key={uc.title} delay={i * 100}>
+              <div className="group overflow-hidden rounded-xl bg-gray-50 shadow-sm transition hover:shadow-md">
+                <div className="zoom-img relative h-48 overflow-hidden sm:h-56">
+                  <img
+                    src={uc.img}
+                    alt={uc.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    width="400"
+                    height="300"
+                  />
+                  <div className="absolute inset-0 bg-brand/0 transition group-hover:bg-brand/20" />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-[18px] font-bold text-gray-900">{uc.title}</h3>
+                  <p className="mt-2 text-[14px] text-gray-600">{uc.desc}</p>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={300} className="mt-10 text-center">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand"
+          >
+            هەموو ببینە
+            <ArrowLeft className="h-4 w-4" />
+          </a>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-/* ---------------------------------- Works ---------------------------------- */
+/* ---------------------------------- Works Grid ---------------------------------- */
 type Work = {
   id: string;
   cat: string;
@@ -648,65 +584,29 @@ const WORKS: Work[] = [
   },
 ];
 
-const CATS = ["هەموو کارەکانمان", "کەپسولەکان", "لایتی ڕووناکی", "ڕەفەکان"];
-
 function Works() {
-  const [cat, setCat] = useState("هەموو");
-  const filtered = cat === "هەموو" ? WORKS : WORKS.filter((w) => w.cat === cat);
-
   return (
-    <section id="works" className="relative overflow-hidden bg-cream py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
-      {/* side leaves */}
-      <div className="pointer-events-none absolute -left-10 top-1/3 hidden opacity-90 lg:block">
-        <svg viewBox="0 0 120 200" className="h-64 w-32 text-[#1e3d20]" fill="currentColor">
-          <ellipse cx="40" cy="60" rx="34" ry="52" transform="rotate(-18 40 60)" />
-          <ellipse cx="70" cy="150" rx="26" ry="40" transform="rotate(14 70 150)" opacity="0.7" />
-        </svg>
-      </div>
-      <div className="pointer-events-none absolute -right-6 top-16 hidden lg:block">
-        <svg viewBox="0 0 100 120" className="h-32 w-24 text-[#8a6a2f]" fill="currentColor" opacity="0.8">
-          <path d="M50 5 C 70 35, 75 75, 50 115 C 25 75, 30 35, 50 5 Z" />
-        </svg>
-      </div>
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <Reveal className="text-center">
+    <section id="works" className="bg-gray-50 py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="mb-8 text-center">
           <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
             <span className="h-[2px] w-6 rounded bg-brand" />
             کارەکانمان
             <span className="h-[2px] w-6 rounded bg-brand" />
           </span>
-          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-charcoal" style={{ fontSize: 'clamp(24px, 4vw, 44px)' }}>
+          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
             دروستکردنی ژینگەیەکی هونەری و مۆدێرن
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[14.5px] font-light leading-8 text-charcoal/60 sm:text-[16px]">
+          <p className="mx-auto mt-4 max-w-xl text-[15px] text-gray-600">
             لە نەخشەسازیی لایتی ڕوناکی و ڕەفەکانەوە بگرە تا دەگاتە کەپسولەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
           </p>
         </Reveal>
 
-        <Reveal delay={150}>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            {CATS.map((c) => (
-              <button
-                key={c}
-                onClick={() => setCat(c)}
-                className={`rounded-full px-7 py-3 text-[14px] font-bold transition-all duration-300 ${
-                  cat === c
-                    ? "bg-brand text-white shadow-[0_12px_24px_-8px_rgba(255,90,0,0.6)] scale-[1.02]"
-                    : "bg-stone2/60 text-charcoal/70 hover:bg-stone2 hover:text-charcoal"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-        </Reveal>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-3 md:gap-7">
-          {filtered.map((w, i) => (
+        <div className="grid gap-6 md:grid-cols-3">
+          {WORKS.map((w, i) => (
             <Reveal key={w.id} delay={i * 120}>
-              <article className="group overflow-hidden rounded-[1.75rem] bg-white shadow-[0_20px_60px_-25px_rgba(23,23,23,0.25)] ring-1 ring-black/5 transition-all duration-500">
-                <div className="zoom-img relative h-[300px] overflow-hidden sm:h-[340px]">
+              <article className="group overflow-hidden rounded-2xl bg-white shadow-md transition hover:shadow-lg">
+                <div className="zoom-img relative h-64 overflow-hidden sm:h-72">
                   <img
                     src={w.img}
                     alt={w.title}
@@ -716,29 +616,20 @@ function Works() {
                     width="400"
                     height="300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="absolute right-4 top-4 rounded-full bg-white/85 px-4 py-1.5 text-[12px] font-bold text-charcoal backdrop-blur">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
+                  <span className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold text-gray-900 backdrop-blur">
                     {w.tag}
                   </span>
-                  <span className="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-brand text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
-                    <ArrowUpLeft className="h-5 w-5" />
-                  </span>
                 </div>
-                <div className="flex items-center justify-between gap-4 p-6">
-                  <div className="text-right">
-                    <h3 className="font-display text-[19px] font-extrabold text-charcoal">
-                      {w.title}
-                    </h3>
-                    <p className="mt-1.5 text-[13.5px] font-light leading-6 text-charcoal/60">
-                      {w.desc}
-                    </p>
-                  </div>
+                <div className="p-6">
+                  <h3 className="font-display text-[18px] font-bold text-gray-900">{w.title}</h3>
+                  <p className="mt-2 line-clamp-2 text-[14px] text-gray-600">{w.desc}</p>
                   <a
                     href="#contact"
-                    aria-label={w.title}
-                    className="animate-pulse-ring grid h-[48px] w-[48px] shrink-0 place-items-center rounded-full bg-brand text-white transition-all duration-300 hover:bg-charcoal hover:rotate-[-45deg]"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-brand-dark"
                   >
-                    <ArrowLeft className="h-5 w-5" strokeWidth={2.2} />
+                    زیاتر بزانە
+                    <ArrowLeft className="h-4 w-4" />
                   </a>
                 </div>
               </article>
@@ -749,7 +640,7 @@ function Works() {
         <Reveal delay={200} className="mt-10 text-center">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-charcoal/15 bg-white px-8 py-3.5 text-[14px] font-bold text-charcoal transition hover:border-brand hover:text-brand"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand"
           >
             هەموو کارەکانمان ببینە
             <ArrowLeft className="h-4 w-4" />
@@ -760,208 +651,100 @@ function Works() {
   );
 }
 
-/* --------------------------------- Services --------------------------------- */
-const SERVICES = [
-  {
-    n: "01",
-    icon: DraftingCompass,
-    title: "تەلارسازی",
-    desc: "دیزاینی ڕەفە، کۆشک و کەپسول بە ستانداردی جیهانی و بیرۆکەی داهێنەرانە",
-  },
-  {
-    n: "02",
-    icon: Sofa,
-    title: "دیزاینی ناوەوە",
-    desc: "دروستکردنی ژینگەیەکی هونەری و ئارام لە نەخشەسازی ماڵ و شوێنی نیشتەجێبوونەوە تا دەگاتە ئۆگیس و هۆتێلە گرانبەهاکان",
-  },
-  {
-    n: "03",
-    icon: Palette,
-    title: "دێکۆرات و ڕازاندنەوە",
-    desc: "هەڵبژاردن و گونجاندنی باشترین ڕەنگ، کەرەستە و ئێکسسواراتەکان بۆ بەخشینی جوانییەکی بێوێنە و هاوسەنگ بە شوێنەکەت",
-  },
-  {
-    n: "04",
-    icon: Brush,
-    title: "دیزاینی تایبەت و داهێنەرانە",
-    desc: "دیزاینی تایبەت بۆلایت، ڕەفە، کۆشک و کەپسول، لەگەڵ دروستکردنی سیستەمی خەوتنی مۆدێرنی جوڵاو (٣٦٠ پلە)",
-  },
-  {
-    n: "05",
-    icon: Ruler,
-    title: "خزمەتگوزارییە ئەندازیارییەکان",
-    desc: "دانانی پلانی تۆکمە، نەخشەی پێکهاتەیی (ئینشائی)، کارەبا و میکانیک، کە لەلایەن ئەندازیارانی پسپۆڕەوە جێبەجێ دەکرێن",
-  },
-  {
-    n: "06",
-    icon: Factory,
-    title: "بەرهەمهێنانی تایبەت لە کارگەی خۆمان",
-    desc: "دروستکردنی پێداویستییەکان بەپێی داواکاری، لە دیزاینی ئەسکەلە و ڕەفەوە بگرە تا دەگاتە کەپسول و سیستەمی جوڵاو.",
-  },
-];
-
-function Services() {
-  return (
-    <section id="services" className="relative bg-white py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto]">
-          <Reveal>
-            <div className="text-right">
-              <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
-                <span className="h-[2px] w-8 rounded bg-brand" />
-                خزمەتگوزارییەکان
-              </span>
-              <h2 className="mt-4 font-display text-[30px] font-black leading-[1.35] text-charcoal sm:text-[44px]">
-                لە بیرۆکەوە تا دەگاتە
-                <span className="text-brand"> دەستت </span>
-              </h2>
-              <p className="mt-4 max-w-xl text-[15px] font-light leading-8 text-charcoal/60">
-               خەونەکانت بسپێرە بە دەستی ستافێک کە لە وردترین بڕگەکانی بیناسازیدا پسپۆڕن
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={150}>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-full bg-charcoal px-7 py-3.5 text-[14px] font-bold text-white transition hover:bg-brand"
-            >
-              داوای راوێژپێکردن بکە
-              <ArrowLeft className="h-4 w-4" />
-            </a>
-          </Reveal>
-        </div>
-
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={(i % 3) * 100}>
-              <div className="group relative h-full overflow-hidden rounded-[1.5rem] border border-[#EDE8E1] bg-cream p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-brand/40 hover:bg-white hover:shadow-[0_30px_60px_-20px_rgba(255,90,0,0.25)]">
-                <div className="flex items-start justify-between">
-                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white text-charcoal shadow-sm ring-1 ring-black/5 transition-all duration-500 group-hover:bg-brand group-hover:text-white group-hover:shadow-[0_14px_28px_-8px_rgba(255,90,0,0.6)]">
-                    <s.icon className="h-6 w-6" strokeWidth={1.7} />
-                  </span>
-                  <span className="font-display text-[15px] font-bold text-charcoal/20 transition-colors group-hover:text-brand/40">
-                    {s.n}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-right font-display text-[18px] font-extrabold text-charcoal">
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-right text-[13.8px] font-light leading-7 text-charcoal/60">
-                  {s.desc}
-                </p>
-                <span className="mt-5 flex items-center gap-2 text-[13px] font-bold text-charcoal/40 transition-colors group-hover:text-brand">
-                  زیاتر بزانە
-                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                </span>
-                <span className="absolute -left-8 -bottom-8 h-24 w-24 rounded-full bg-brand/0 blur-2xl transition-all duration-500 group-hover:bg-brand/15" />
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------------------------------- About ---------------------------------- */
 function About() {
   return (
-    <section id="about" className="relative bg-cream px-3 py-6 sm:px-5" style={{ scrollMarginTop: '80px' }}>
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-sand/60 ring-1 ring-black/5 sm:rounded-[2.5rem]">
-        <div className="grid items-center gap-10 p-7 sm:p-12 lg:grid-cols-2 lg:gap-14 lg:p-16">
-          {/* Text RIGHT */}
-          <div className="text-right">
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-[13px] font-bold text-brand ring-1 ring-brand/20">
-                <Sparkles className="h-4 w-4" />
-                دەربارەی ئێمە
-              </span>
-              <h2 className="mt-5 font-display text-[30px] font-black leading-[1.4] text-charcoal sm:text-[42px]">
-                کارگەیەک کە هونەر
-                <br />
-                دەکاتە <span className="text-brand">ژیان</span>
-              </h2>
-              <p className="mt-5 text-[15px] font-light leading-8 text-charcoal/65">
-               ئێمە لە کارگەی ئەنتیکا ژینگەیەک بونیاد دەنێین کە شایەنی متمانەی ئێوەبێت
-               تیمەکەمان لە کۆمەڵێک ئەندازیار و تەکنیککاری خاوەن ئەزموون پێکهاتووە کە ساڵانێکی درێژە لە بواری بیناسازی
-               و خانوی کەپسولیدا کار دەکەن...<br></br>
-               ئامانجی ئێمە دابینکردنی شوێنێکی مۆدێرن و ئارامە بۆ ئەوەی داهاتوویەکی گەش بۆ خۆت و خێزانەکەت مسۆگەر بکەیت
-              </p>
-            </Reveal>
-            <Reveal delay={150}>
-              <ul className="mt-6 space-y-3.5">
-                {[
-                  "تیمی ئەندازیار و دیزاینەری نێودەوڵەتی",
-                  "کارگەی تایبەتی خۆمان بۆ بەرهەمهێنان",
-                  "مەوادی کوالێتی بەرز و ئۆرجیناڵ",
-                ].map((t) => (
-                  <li key={t} className="flex items-center gap-3 text-[14.5px] font-semibold text-charcoal/85">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-white">
-                      <Check className="h-4 w-4" strokeWidth={3} />
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={250}>
-              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-charcoal/10 pt-7">
-                {[
-                  { v: "+300", l: "پرۆژەی تەواو" },
-                  { v: "20", l: "ساڵ ئەزموون" },
-                  { v: "100%", l: "ڕەزامەندی کڕیارەکانمان" },
-                ].map((s) => (
-                  <div key={s.l}>
-                    <div className="font-display text-[26px] font-black text-charcoal sm:text-[32px]">
-                      {s.v}
-                    </div>
-                    <div className="mt-1 text-[12.5px] font-medium text-charcoal/55">
-                      {s.l}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <a
-                  href="#contact"
-                  className="btn-shine inline-flex items-center gap-2 rounded-full bg-charcoal px-8 py-4 text-[14.5px] font-bold text-white transition hover:bg-brand"
-                >
-                  پەیوەندیمان پێوە بکە
-                  <ArrowLeft className="h-4 w-4" />
-                </a>
-              </div>
-            </Reveal>
-          </div>
+    <section id="about" className="bg-white py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
+          {/* Text RIGHT */}
+          <div className="order-1 lg:order-2 w-full text-right">
+            <div className="text-right inline-block w-full">
+              <Reveal>
+                <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-2 text-[13px] font-bold text-brand">
+                  <Sparkles className="h-4 w-4" />
+                  دەربارەی ئێمە
+                </span>
+                <h2 className="mt-5 font-display text-[32px] font-black leading-[1.3] text-gray-900 sm:text-[42px] text-right">
+                  کارگەیەک کە هونەر
+                  <br />
+                  دەکاتە <span className="text-brand">ژیان</span>
+                </h2>
+                <p className="mt-5 text-[15px] font-light leading-8 text-gray-600 text-right">
+                  ئێمە لە کارگەی ئەنتیکا ژینگەیەک بونیاد دەنێین کە شایەنی متمانەی ئێوەبێت
+                  تیمەکەمان لە کۆمەڵێک ئەندازیار و تەکنیککاری خاوەن ئەزموون پێکهاتووە کە ساڵانێکی درێژە لە بواری بیناسازی
+                  و خانوی کەپسولیدا کار دەکەن...<br></br>
+                  ئامانجی ئێمە دابینکردنی شوێنێکی مۆدێرن و ئارامە بۆ ئەوەی داهاتوویەکی گەش بۆ خۆت و خێزانەکەت مسۆگەر بکەیت
+                </p>
+              </Reveal>
+              <Reveal delay={150}>
+                <ul className="mt-6 space-y-3.5">
+                  {[
+                    "تیمی ئەندازیار و دیزاینەری نێودەوڵەتی",
+                    "کارگەی تایبەتی خۆمان بۆ بەرهەمهێنان",
+                    "مەوادی کوالێتی بەرز و ئۆرجیناڵ",
+                  ].map((t) => (
+                    <li key={t} className="flex items-center gap-3 text-[14.5px] font-semibold text-gray-700">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-white">
+                        <Check className="h-4 w-4" strokeWidth={3} />
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+              <Reveal delay={250}>
+                <div className="mt-8 grid grid-cols-3 gap-4 border-t border-gray-200 pt-7">
+                  {[
+                    { v: "+300", l: "پرۆژەی تەواو" },
+                    { v: "20", l: "ساڵ ئەزموون" },
+                    { v: "100%", l: "ڕەزامەندی" },
+                  ].map((s) => (
+                    <div key={s.l}>
+                      <div className="font-display text-[26px] font-black text-gray-900 sm:text-[32px]">
+                        {s.v}
+                      </div>
+                      <div className="mt-1 text-[12.5px] font-medium text-gray-500">
+                        {s.l}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 text-[14.5px] font-bold text-white transition hover:bg-brand-dark"
+                  >
+                    پەیوەندیمان پێوە بکە
+                    <ArrowLeft className="h-4 w-4" />
+                  </a>
+                </div>
+              </Reveal>
+            </div>
+          </div>
           {/* Images LEFT */}
-          <Reveal delay={150}>
+          <Reveal className="order-2 lg:order-2">
             <div className="relative">
-              <div className="zoom-img overflow-hidden rounded-[1.75rem] shadow-[0_35px_70px_-25px_rgba(23,23,23,0.4)]">
+              <div className="zoom-img overflow-hidden rounded-2xl shadow-lg">
                 <img
                   src="/images/studio-about.jpg"
                   alt="ستۆدیۆی ANTIKA FACTORY"
-                  className="h-[380px] w-full object-cover sm:h-[480px]"
+                  className="h-[400px] w-full object-cover sm:h-[500px]"
                   loading="lazy"
                   decoding="async"
                   width="600"
-                  height="480"
+                  height="500"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-4 hidden w-56 overflow-hidden rounded-2xl border-4 border-cream shadow-2xl sm:block lg:-right-8">
-                <img
-                  src="/images/cabin.png"
-                  alt="وردەکاری"
-                  className="h-40 w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  width="224"
-                  height="160"
-                />
+              <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-brand px-6 py-4 text-white shadow-xl sm:block">
+                <div className="font-display text-[32px] font-black leading-none">
+                  +300
+                </div>
+                <div className="text-[12px] font-medium text-white/80">
+                  پرۆژەی سەرکەوتوو
+                </div>
               </div>
-              <div className="absolute -left-3 top-6 rounded-2xl bg-brand px-5 py-4 text-white shadow-[0_18px_40px_-12px_rgba(255,90,0,0.7)] sm:-left-6">
-                <div className="font-display text-[26px] font-black leading-none">20+  ساڵ ئەزموون</div>
-              </div>
-              <div className="bg-dots pointer-events-none absolute -top-6 right-8 h-20 w-32 opacity-60" />
             </div>
           </Reveal>
         </div>
@@ -970,72 +753,228 @@ function About() {
   );
 }
 
-/* ------------------------------- Testimonials ------------------------------- */
-function Testimonials() {
-  return (
-    <section className="relative overflow-hidden bg-white py-16 sm:py-20" style={{ scrollMarginTop: '80px' }}>
-      {/* marquee */}
-      <div className="mb-10 overflow-hidden border-y border-[#EFE9E1] bg-cream py-4" dir="ltr">
-        <div className="animate-marquee flex w-max whitespace-nowrap" style={{ '--marquee-duration': '28s' } as React.CSSProperties}>
-          {[0, 1].map((k) => (
-            <div key={k} className="flex" aria-hidden={k === 1}>
-              {["تەلارسازی", "دیزاینی ناوەوە", "دیکۆر", "هونەر", "ئەندازیاری", "کەپسول", "ڕووناکی", "ڕەفە"].map(
-                (w) => (
-                  <span key={w + k} className="flex items-center gap-8 px-4 font-display text-[15px] font-bold text-charcoal/35" dir="rtl">
-                    {w}
-                    <span className="h-2 w-2 rounded-full bg-brand" />
-                  </span>
-                )
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+/* ---------------------------------- Process ---------------------------------- */
+const PROCESS_STEPS = [
+  {
+    n: "01",
+    title: "ڕاوێژکردن",
+    desc: "پەیوەندی بکە و داواکاریەکەت بڵێ بۆ دیزاین",
+  },
+  {
+    n: "02",
+    title: "دیزاین",
+    desc: "دیزاینی تایبەت و پلانێکی وردبینی بۆ پرۆژەکەت",
+  },
+  {
+    n: "03",
+    title: "بەرهەمهێنان",
+    desc: "دروستکردن لە کارگەی خۆمان بە کوالێتی بەرز",
+  },
+  {
+    n: "04",
+    title: "دابەشکردن",
+    desc: "گەیاندن و دابەشکردن لە کاتی دیاریکراودا",
+  },
+];
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <Reveal className="text-center">
-          <span className="text-[14px] font-bold text-brand">ڕای کڕیارەکان</span>
-          <h2 className="mt-3 font-display text-[28px] font-black text-charcoal sm:text-[38px]">
-            ئەوانەی متمانەیان پێکردین
+function Process() {
+  return (
+    <section className="bg-gray-50 py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="mb-12 text-center">
+          <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
+            <span className="h-[2px] w-6 rounded bg-brand" />
+            پرۆسەکەمان
+            <span className="h-[2px] w-6 rounded bg-brand" />
+          </span>
+          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+            ٤ قۆناغی سادە
           </h2>
         </Reveal>
-        <div className="mt-9 grid gap-6 md:grid-cols-2">
-          {[
-            {
-              q: "کوالێتی کارەکانیان زۆر لەوە بەرزتر بوو کە چاوەڕێم دەکرد! دیزاینی کەپسولەکە بە وردەکارییەکی بێئەندازە و ڕێک لە کاتی دیاریکراودا ڕادەستکرا. زۆر سوپاس بۆ تیمی ANTIKA FACTORY، بەڕاستی شایەنی متمانەن",
-              n: "ئالا محەمەد",
-              r: "خاوەنی کافێ — هەولێر",
-            },
-            {
-              q: "دیزاینی ناوەوەی ئۆفیسەکەمان بەتەواوی نوێ بووەوە و ڕۆحێکی تازەی بە بەردا هات. لایتەکانی ڕووناکی و ڕەفەکان جگە لە جوانی، زۆر کوالێتی بەرزن. بێ دوودڵی یەکێک لە پیشەییترین تیمەکانن کە کارم لەگەڵ کردبن",
-              n: "دیار کەریم",
-              r: "بەڕێوەبەری ئۆفیس — سلێمانی",
-            },
-          ].map((t, i) => (
-            <Reveal key={t.n} delay={i * 120}>
-              <figure className="relative h-full rounded-[1.5rem] bg-cream p-8 ring-1 ring-black/5">
-                <Quote className="h-8 w-8 fill-brand/15 text-brand/30" />
-                <div className="mt-3 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <Star key={s} className="h-4 w-4 fill-brand text-brand" />
-                  ))}
+
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {PROCESS_STEPS.map((step, i) => (
+            <Reveal key={step.n} delay={i * 100}>
+              <div className="text-center">
+                <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-full bg-brand text-white font-display text-2xl font-black">
+                  {step.n}
                 </div>
-                <blockquote className="mt-4 text-right text-[15px] font-light leading-8 text-charcoal/75">
-                  “{t.q}”
-                </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-charcoal/10 pt-5">
-                  <span className="grid h-12 w-12 place-items-center rounded-full bg-charcoal font-display text-[15px] font-bold text-white">
-                    {t.n[0]}
-                  </span>
-                  <span className="text-right">
-                    <span className="block text-[14.5px] font-extrabold text-charcoal">{t.n}</span>
-                    <span className="block text-[12.5px] text-charcoal/55">{t.r}</span>
-                  </span>
-                </figcaption>
-              </figure>
+                <h3 className="font-display text-[18px] font-bold text-gray-900">{step.title}</h3>
+                <p className="mt-2 text-[14px] text-gray-600">{step.desc}</p>
+              </div>
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------------- Why Choose Us ---------------------------------- */
+const WHY_CHOOSE = [
+  {
+    title: "دیزاینی مۆدێرن",
+    desc: "دیزاینی تایبەت و داهێنەرانە بە هەر پرۆژەیەک، تێکەڵەیەک لە هونەر و تەکنیک",
+    img: "/images/work-capsule.png",
+    reverse: false,
+  },
+  {
+    title: "کوالێتی بەرز",
+    desc: "بەکارهێنانی مەوادی ئۆرجیناڵ و کوالێتی بەرز بۆ دروستکردنی بەرهەمەکان",
+    img: "/images/work-lighting.jpg",
+    reverse: true,
+  },
+  {
+    title: "جێبەجێکردنی خێرا",
+    desc: "خێرا و دروست لە کاتی دیاریکراودا، بە پلانێکی وردبینی تا 1mm",
+    img: "/images/work-shelves.jpg",
+    reverse: false,
+  },
+];
+
+function WhyChooseUs() {
+  // return (
+  //   <section className="bg-white py-16 sm:py-24">
+  //     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  //       <Reveal className="mb-12 text-center">
+  //         <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
+  //           <span className="h-[2px] w-6 rounded bg-brand" />
+  //           بۆچی ئێمە؟
+  //           <span className="h-[2px] w-6 rounded bg-brand" />
+  //         </span>
+  //         <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+  //           هۆکارەکانی هەڵبژاردنی ئێمە
+  //         </h2>
+  //       </Reveal>
+
+  //       <div className="space-y-16">
+  //         {WHY_CHOOSE.map((item, i) => (
+  //           <Reveal key={item.title} delay={i * 150}>
+  //             <div className={`grid items-center gap-8 lg:gap-16 ${item.reverse ? 'lg:grid-cols-2' : 'lg:grid-cols-2'}`}>
+  //               <div className={`order-2 ${item.reverse ? 'lg:order-1' : 'lg:order-2'}`}>
+  //                 <div className="zoom-img overflow-hidden rounded-2xl shadow-lg">
+  //                   <img
+  //                     src={item.img}
+  //                     alt={item.title}
+  //                     className="h-[300px] w-full object-cover sm:h-[400px]"
+  //                     loading="lazy"
+  //                     width="600"
+  //                     height="400"
+  //                   />
+  //                 </div>
+  //               </div>
+  //               <div className={`order-1 text-right ${item.reverse ? 'lg:order-2' : 'lg:order-1'}`}>
+  //                 <h3 className="font-display text-[28px] font-black text-gray-900 sm:text-[36px]">
+  //                   {item.title}
+  //                 </h3>
+  //                 <p className="mt-4 text-[16px] text-gray-600 leading-relaxed">
+  //                   {item.desc}
+  //                 </p>
+  //                 <a
+  //                   href="#contact"
+  //                   className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-brand-dark"
+  //                 >
+  //                   زیاتر بزانە
+  //                   <ArrowLeft className="h-4 w-4" />
+  //                 </a>
+  //               </div>
+  //             </div>
+  //           </Reveal>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   </section>
+  // );
+}
+
+/* ---------------------------------- Design Capabilities ---------------------------------- */
+const CAPABILITIES = [
+  {
+    icon: DraftingCompass,
+    title: "تەلارسازی",
+    desc: "دیزاینی ڕەفە، کۆشک و کەپسول بە ستانداردی جیهانی",
+  },
+  {
+    icon: Palette,
+    title: "دێکۆرات",
+    desc: "هەڵبژاردن و گونجاندنی باشترین ڕەنگ و کەرەستە",
+  },
+  {
+    icon: Ruler,
+    title: "ئەندازیاری",
+    desc: "دانانی پلان و پێوانەی وردبینی تا 1mm",
+  },
+  {
+    icon: Factory,
+    title: "بەرهەمهێنان",
+    desc: "کارگەی تایبەتی خۆمان بۆ کوالێتی بەرز",
+  },
+];
+
+function Capabilities() {
+  return (
+    <section className="bg-gray-50 py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal className="mb-12 text-center">
+          <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
+            <span className="h-[2px] w-6 rounded bg-brand" />
+            تواناکانمان
+            <span className="h-[2px] w-6 rounded bg-brand" />
+          </span>
+          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+            دیزاین و تواناکان
+          </h2>
+        </Reveal>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {CAPABILITIES.map((cap, i) => (
+            <Reveal key={cap.title} delay={i * 100}>
+              <div className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md">
+                <span className="grid h-14 w-14 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <cap.icon className="h-6 w-6" strokeWidth={1.7} />
+                </span>
+                <h3 className="mt-4 font-display text-[18px] font-bold text-gray-900">{cap.title}</h3>
+                <p className="mt-2 text-[14px] text-gray-600">{cap.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------------- Contact CTA Band ---------------------------------- */
+function ContactCTA() {
+  return (
+    <section className="bg-brand py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 className="font-display text-[32px] font-black leading-[1.3] text-white sm:text-[42px]">
+            ئامادەیت پرۆژەکەت دەست پێ بکەین؟
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-[16px] text-white/90">
+            پەیوەندی بکە بە ئێمەوە بۆ راوێژپێکردن و قەنەخەدە
+          </p>
+        </Reveal>
+        <Reveal delay={150}>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="tel:+9647501234567"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-bold text-brand transition hover:bg-gray-100"
+            >
+              <PhoneCall className="h-5 w-5" />
+              <span dir="ltr">+964 750 123 4567</span>
+            </a>
+            <a
+              href="mailto:info@antika-factory.com"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-white px-8 py-4 text-[15px] font-bold text-white transition hover:bg-white/10"
+            >
+              <Mail className="h-5 w-5" />
+              info@antika-factory.com
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -1047,27 +986,18 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
   const [sent, setSent] = useState(false);
 
   return (
-    <footer id="contact" className="relative overflow-hidden bg-charcoal pt-14 text-white">
-      {/* orange organic shapes */}
-      <svg viewBox="0 0 300 160" className="pointer-events-none absolute -top-2 right-0 h-32 w-72 text-brand sm:h-40 sm:w-[420px]" preserveAspectRatio="none" fill="currentColor">
-        <path d="M0 0 H300 V40 C 240 90, 180 70, 130 110 C 90 140, 40 120, 0 90 Z" />
-      </svg>
-      <svg viewBox="0 0 260 220" className="pointer-events-none absolute -bottom-4 left-0 h-52 w-56 text-brand sm:h-72 sm:w-72" preserveAspectRatio="none" fill="currentColor">
-        <path d="M0 220 V60 C 60 80, 90 40, 140 70 C 190 100, 210 150, 260 170 L 260 220 Z" opacity="0.95" />
-      </svg>
-      <div className="pointer-events-none absolute left-1/4 top-10 h-40 w-40 rounded-full bg-brand/10 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6" style={{ paddingInline: 'max(16px, 5%)' }}>
-        <div className="grid gap-10 pb-12 lg:grid-cols-[1.15fr_1fr_0.9fr_1.15fr] lg:gap-8">
-          {/* 1 BRAND — rightmost */}
+    <footer id="contact" className="bg-gray-900 pt-16 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 pb-12 lg:grid-cols-4 lg:gap-8">
+          {/* 1 BRAND */}
           <Reveal>
             <div className="text-right">
               <Logo dark />
-              <p className="mt-5 max-w-[260px] text-[13.5px] font-light leading-7 text-white/60">
+              <p className="mt-5 max-w-[260px] text-[13.5px] font-light leading-7 text-gray-400">
                 ئەنتیکا، تێکەڵەیەک لە هونەر و تەلارسازیی هاوچەرخ
               </p>
               <div className="mt-6">
-                <p className="text-[13px] font-bold text-white/80">ئێمە لە سۆشیال میدیا</p>
+                <p className="text-[13px] font-bold text-gray-300">ئێمە لە سۆشیال میدیا</p>
                 <div className="mt-3 flex gap-3">
                   {[
                     { icon: FacebookIcon, l: "Facebook" },
@@ -1079,7 +1009,7 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
                       key={s.l}
                       href="#home"
                       aria-label={s.l}
-                      className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white/70 transition-all hover:-translate-y-1 hover:border-brand hover:bg-brand hover:text-white"
+                      className="grid h-11 w-11 place-items-center rounded-full border border-gray-700 text-gray-400 transition hover:border-brand hover:bg-brand hover:text-white"
                     >
                       <s.icon className="h-[17px] w-[17px]" />
                     </a>
@@ -1091,113 +1021,101 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
 
           {/* 2 CONTACT */}
           <Reveal delay={100}>
-            <div className="text-right lg:border-r lg:border-white/10 lg:pr-8">
+            <div className="text-right">
               <h4 className="font-display text-[17px] font-extrabold">پەیوەندیمان پێوە بکە</h4>
               <ul className="mt-5 space-y-4 text-[13.5px]">
                 <li className="flex items-center gap-3">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
                     <Phone className="h-4 w-4" />
                   </span>
-                  <span className="text-white/80" dir="ltr">+964 750 123 4567</span>
+                  <span className="text-gray-400" dir="ltr">+964 750 123 4567</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
                     <Mail className="h-4 w-4" />
                   </span>
-                  <span className="text-white/80" dir="ltr">info@antika-factory.com</span>
+                  <span className="text-gray-400" dir="ltr">info@antika-factory.com</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
                     <MapPin className="h-4 w-4" />
                   </span>
-                  <span className="text-white/80">سلێمانی، عێراق</span>
+                  <span className="text-gray-400">سلێمانی، عێراق</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-white">
                     <Clock className="h-4 w-4" />
                   </span>
-                  <span className="text-white/80">شەممە - پێنجشەممە، 9:00 - 6:00</span>
+                  <span className="text-gray-400">شەممە - پێنجشەممە، 9:00 - 6:00</span>
                 </li>
               </ul>
             </div>
           </Reveal>
 
-          {/* 3 LOCATION MAP */}
+          {/* 3 NAVIGATION */}
           <Reveal delay={180}>
-            <div className="text-right lg:border-r lg:border-white/10 lg:pr-8">
-              <div className="bg-map-grid relative h-36 overflow-hidden rounded-2xl bg-coal ring-1 ring-white/10">
-                {/* roads */}
-                <svg viewBox="0 0 200 120" className="absolute inset-0 h-full w-full" fill="none">
-                  <path d="M-10 70 C 40 65, 70 80, 110 60 S 170 50, 220 65" stroke="rgba(255,255,255,0.18)" strokeWidth="5" strokeLinecap="round" />
-                  <path d="M60 -10 C 65 30, 55 70, 70 130" stroke="rgba(255,255,255,0.12)" strokeWidth="4" />
-                  <path d="M130 -10 C 125 40, 135 80, 125 130" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
-                </svg>
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <span className="absolute -inset-3 animate-ping rounded-full bg-brand/30" />
-                  <MapPin className="relative h-10 w-10 fill-brand text-brand drop-shadow-[0_8px_16px_rgba(255,90,0,0.6)]" />
-                </span>
-                <span className="absolute bottom-2 right-2 rounded-full bg-black/50 px-3 py-1 text-[11px] font-bold text-white/80 backdrop-blur">
-                  36.19° N, 44.01° E
-                </span>
-              </div>
-              <h4 className="mt-4 font-display text-[16px] font-extrabold">شوێنی ئێمە</h4>
-              <p className="mt-1 text-[13px] text-white/55">سلێمانی، عێراق.</p>
-              <a href="#home" className="mt-3 inline-flex items-center gap-1.5 px-4 py-4 text-[13px] font-bold text-brand hover:text-brand-light">
-                بینین لە نەخشە
-                <ArrowLeft className="h-3.5 w-3.5" />
-              </a>
+            <div className="text-right">
+              <h4 className="font-display text-[16px] font-extrabold">بەستەرەکان</h4>
+              <ul className="mt-5 space-y-3 text-[13.5px]">
+                {NAV.map((n) => (
+                  <li key={n.id}>
+                    <a
+                      href={`#${n.id}`}
+                      onClick={() => onNav(n.id)}
+                      className="text-gray-400 transition hover:text-brand"
+                    >
+                      {n.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Reveal>
 
-          {/* 4 FORM — leftmost */}
-          <Reveal delay={240}>
+          {/* 4 CONTACT FORM */}
+          <Reveal delay={220}>
             <div className="text-right">
-              <h4 className="font-display text-[17px] font-extrabold">ناردنی ئێمێڵ بۆ ئەنتیکا</h4>
+              <h4 className="font-display text-[16px] font-extrabold">نامە بنێرە</h4>
               {sent ? (
-                <div className="mt-5 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-6 text-center">
-                  <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-400 text-charcoal">
-                    <Check className="h-6 w-6" strokeWidth={3} />
-                  </span>
-                  <p className="mt-3 font-display text-[15px] font-bold">سوپاس! پەیامەکەت گەیشت.</p>
-                  <p className="mt-1 text-[13px] text-white/60">لەمزووانە وەڵامت دەدەینەوە.</p>
-                  <button onClick={() => setSent(false)} className="mt-4 text-[13px] font-bold text-brand hover:underline">
-                    نامەیەکی تر بنێرە
-                  </button>
+                <div className="mt-5 rounded-xl bg-brand/20 p-6 text-center">
+                  <p className="text-[14px] font-bold text-brand">سوپاس! نامەکەت گەیشت.</p>
                 </div>
               ) : (
                 <form
-                  className="mt-5 space-y-3"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (form.name && form.email) setSent(true);
+                    setSent(true);
+                    setTimeout(() => setSent(false), 3000);
                   }}
+                  className="mt-5 space-y-3"
                 >
                   <input
+                    type="text"
+                    placeholder="ناو"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="ناو"
+                    className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-[13px] text-white placeholder:text-gray-500 transition focus:border-brand focus:outline-none"
                     required
-                    className="w-full rounded-full border border-white/10 bg-white/[0.07] px-5 py-3.5 text-right text-[16px] text-white placeholder:text-white/40 outline-none backdrop-blur transition focus:border-brand focus:bg-white/10"
                   />
                   <input
+                    type="email"
+                    placeholder="ئیمەیڵ"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="ئیمەیل"
-                    type="email"
+                    className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-[13px] text-white placeholder:text-gray-500 transition focus:border-brand focus:outline-none"
                     required
-                    dir="rtl"
-                    className="w-full rounded-full border border-white/10 bg-white/[0.07] px-5 py-3.5 text-right text-[16px] text-white placeholder:text-white/40 outline-none backdrop-blur transition focus:border-brand focus:bg-white/10"
                   />
                   <textarea
+                    placeholder="نامەکەت"
                     value={form.msg}
                     onChange={(e) => setForm({ ...form, msg: e.target.value })}
-                    placeholder="پەیامەکەت بنووسە"
                     rows={3}
-                    className="w-full resize-none rounded-2xl border border-white/10 bg-white/[0.07] px-5 py-3.5 text-right text-[16px] text-white placeholder:text-white/40 outline-none backdrop-blur transition focus:border-brand focus:bg-white/10"
+                    className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-[13px] text-white placeholder:text-gray-500 transition focus:border-brand focus:outline-none resize-none"
+                    required
                   />
                   <button
                     type="submit"
-                    className="btn-shine flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3.5 text-[14.5px] font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_16px_32px_-10px_rgba(255,90,0,0.7)]"
+                    className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3.5 text-[14.5px] font-bold text-white transition hover:bg-brand-dark"
                   >
                     ناردن
                     <Send className="h-4 w-4 -scale-x-100" />
@@ -1209,21 +1127,56 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
         </div>
 
         {/* bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 sm:flex-row">
-          <div className="flex items-center gap-2 text-[12.5px] font-medium text-white/50">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-800 py-6 sm:flex-row">
+          <div className="flex items-center gap-2 text-[12.5px] font-medium text-gray-500">
             <button onClick={() => onNav("services")} className="px-4 py-4 transition hover:text-brand">دیزاین</button>
-            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span className="h-1 w-1 rounded-full bg-gray-700" />
             <button onClick={() => onNav("about")} className="px-4 py-4 transition hover:text-brand">هونەر</button>
-            <span className="h-1 w-1 rounded-full bg-white/25" />
+            <span className="h-1 w-1 rounded-full bg-gray-700" />
             <button onClick={() => onNav("contact")} className="px-4 py-4 transition hover:text-brand">ئەندازیاری</button>
           </div>
-          <p className="text-[12.5px] text-white/50">© 2026 ANTIKA FACTORY. هەموو مافەکان پارێزراون.</p>
+          <p className="text-[12.5px] text-gray-500">© 2026 ANTIKA FACTORY. هەموو مافەکان پارێزراون.</p>
         </div>
       </div>
 
-      {/* back to top */}
+      {/* Floating Actions */}
+      <FloatingActions />
       <BackToTop />
     </footer>
+  );
+}
+
+/* ---------------------------------- Floating Actions ---------------------------------- */
+function FloatingActions() {
+  return (
+    <div className="fixed bottom-24 left-6 z-40 flex flex-col gap-3 sm:bottom-24 sm:left-6" style={{
+      left: 'max(24px, env(safe-area-inset-left))',
+      bottom: 'max(100px, env(safe-area-inset-bottom))'
+    }}>
+      <a
+        href="https://wa.me/9647501234567"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+        className="grid h-12 w-12 place-items-center rounded-full bg-green-500 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        <MessageCircle className="h-5 w-5" />
+      </a>
+      <a
+        href="tel:+9647501234567"
+        aria-label="Call"
+        className="grid h-12 w-12 place-items-center rounded-full bg-brand text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        <PhoneCall className="h-5 w-5" />
+      </a>
+      <a
+        href="mailto:info@antika-factory.com"
+        aria-label="Email"
+        className="grid h-12 w-12 place-items-center rounded-full bg-gray-700 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        <Mail className="h-5 w-5" />
+      </a>
+    </div>
   );
 }
 
@@ -1238,10 +1191,9 @@ function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="بگەڕێوە سەرەوە"
-      className={`fixed bottom-6 left-6 z-50 grid h-12 w-12 place-items-center rounded-full bg-brand text-white shadow-[0_16px_32px_-8px_rgba(255,90,0,0.7)] transition-all duration-500 hover:bg-charcoal ${
-        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
-      }`}
-      style={{ 
+      className={`fixed bottom-6 left-6 z-50 grid h-12 w-12 place-items-center rounded-full bg-gray-700 text-white shadow-lg transition-all duration-300 hover:bg-gray-600 ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        }`}
+      style={{
         bottom: 'max(24px, env(safe-area-inset-bottom))',
         left: 'max(24px, env(safe-area-inset-left))'
       }}
@@ -1256,7 +1208,7 @@ export default function App() {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const ids = ["home", "works", "services", "about", "contact"];
+    const ids = ["home", "works", "about", "contact"];
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -1273,15 +1225,17 @@ export default function App() {
   }, []);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-cream font-body text-charcoal">
+    <div dir="rtl" className="min-h-screen bg-white font-body text-gray-900">
       <Header active={active} onNav={setActive} />
-      <main>
+      <main id="main-content">
         <Hero />
-        <Features />
+        <UseCases />
         <Works />
-        <Services />
         <About />
-        <Testimonials />
+        <Process />
+        <WhyChooseUs />
+        <Capabilities />
+        <ContactCTA />
       </main>
       <Footer onNav={setActive} />
     </div>
