@@ -4,6 +4,7 @@ import { SolutionPage } from "./pages/SolutionPage";
 import { solutions } from "./data/solutions";
 import {
   ArrowLeft,
+  ArrowRight,
   ArrowUp,
   ArrowUpLeft,
   Brush,
@@ -514,7 +515,7 @@ function Hero() {
               className="absolute right-4 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/90 text-gray-900 shadow-lg transition hover:bg-white"
               aria-label="Next slide"
             >
-              <ArrowLeft className="h-5 w-5 rotate-180" />
+              <ArrowRight className="h-5 w-5" />
             </button>
           </Reveal>
         </div>
