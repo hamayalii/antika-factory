@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import { SolutionPage } from "./pages/SolutionPage";
+import { solutions } from "./data/solutions";
 import {
   ArrowLeft,
   ArrowUp,
   ArrowUpLeft,
   Brush,
   Check,
+  ChevronDown,
   Clock,
   Diamond,
   DraftingCompass,
@@ -126,11 +130,11 @@ function Logo({ dark = false }: { dark?: boolean }) {
 
 /* ---------------------------------- Header ---------------------------------- */
 const NAV = [
-  { id: "home", label: "سەرەکی" },
-  { id: "works", label: "کارەکانمان" },
-  { id: "services", label: "خزمەتگوزارییەکانمان" },
-  { id: "about", label: "دەربارەی ئێمە" },
-  { id: "contact", label: "پەیوەندیمان پێوە بکە" },
+  { id: "home", label: "سەرەکی", path: "/" },
+  { id: "works", label: "کارەکانمان", path: "/#works" },
+  { id: "about", label: "دەربارەی ئێمە", path: "/#about" },
+  { id: "contact", label: "پەیوەندیمان پێوە بکە", path: "/#contact" },
+  { id: "solutions", label: "چارەسەرەکانمان", isDropdown: true },
 ];
 
 function Header({
@@ -142,10 +146,14 @@ function Header({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const scrollPosition = useRef(0);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -217,18 +225,38 @@ function Header({
 
   // Close menu when clicking outside
   useEffect(() => {
-    if (!open) return;
+    if (!open && !dropdownOpen) return;
 
     const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node) &&
+      if (open && menuRef.current && !menuRef.current.contains(e.target as Node) &&
         menuButtonRef.current && !menuButtonRef.current.contains(e.target as Node)) {
         setOpen(false);
+      }
+      if (dropdownOpen && dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [open]);
+  }, [open, dropdownOpen]);
+
+  // Handle cross-page hash scroll
+  useEffect(() => {
+    if (location.hash) {
+      setTimeout(() => {
+        const id = location.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          onNav(id);
+        }
+      }, 100);
+    } else if (location.pathname === "/") {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      onNav("home");
+    }
+  }, [location.hash, location.pathname]);
 
   return (
     <>
@@ -240,30 +268,57 @@ function Header({
           {/* Nav center */}
           <nav className="hidden items-center gap-8 lg:flex">
             {NAV.map((n) => (
-              <a
-                key={n.id}
-                href={`#${n.id}`}
-                onClick={() => onNav(n.id)}
-                className={`nav-link text-[14.5px] font-semibold transition-colors ${active === n.id
-                  ? "active"
-                  : "text-gray-600 hover:text-gray-900"
-                  }`}
-              >
-                {n.label}
-              </a>
+              n.isDropdown ? (
+                <div key={n.id} className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className={`nav-link flex items-center gap-1 text-[14.5px] font-semibold transition-colors ${location.pathname.includes('/solutions') ? "active" : "text-gray-600 hover:text-gray-900"
+                      }`}
+                  >
+                    {n.label}
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  <div className={`absolute top-full right-0 mt-2 w-56 rounded-xl bg-white shadow-xl ring-1 ring-black/5 transition-all duration-200 ${dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                    <div className="py-2">
+                      {solutions.map((s) => (
+                        <Link
+                          key={s.id}
+                          to={`/solutions/${s.id}`}
+                          onClick={() => setDropdownOpen(false)}
+                          className="block px-4 py-2.5 text-[14px] font-medium text-gray-700 hover:bg-gray-50 hover:text-brand transition-colors"
+                        >
+                          {s.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={n.id}
+                  to={n.path || "/"}
+                  className={`nav-link text-[14.5px] font-semibold transition-colors ${(location.pathname === "/" ? active === n.id : location.pathname === n.path)
+                      ? "active"
+                      : "text-gray-600 hover:text-gray-900"
+                    }`}
+                >
+                  {n.label}
+                </Link>
+              )
             ))}
           </nav>
 
           {/* CTA LEFT */}
           <div className="flex items-center gap-2">
-            <a
-              href="#contact"
-              onClick={() => onNav("contact")}
+            <Link
+              to="/#contact"
               className="hidden items-center gap-2 rounded-full bg-brand px-6 py-3 text-[14px] font-bold text-white transition hover:bg-brand-dark sm:inline-flex"
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
-            </a>
+            </Link>
             <button
               ref={menuButtonRef}
               onClick={() => setOpen(!open)}
@@ -284,45 +339,53 @@ function Header({
           role="dialog"
           aria-modal="true"
           aria-label="مێنیوی سەرەکی"
-          className={`mx-auto max-w-7xl overflow-hidden bg-white shadow-lg transition-all duration-300 lg:hidden ${open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          className={`mx-auto max-w-7xl overflow-hidden bg-white shadow-lg transition-all duration-300 lg:hidden ${open ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
             }`}
         >
           <nav className="flex flex-col p-4">
             {NAV.map((n, i) => (
-              <a
-                key={n.id}
-                href={`#${n.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNav(n.id);
-                  setOpen(false);
-                  setTimeout(() => {
-                    const element = document.getElementById(n.id);
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }, 100);
-                }}
-                className={`flex items-center justify-between rounded-xl px-5 py-4 text-[15px] font-bold transition ${active === n.id
-                  ? "bg-brand-soft text-brand"
-                  : "text-gray-700 hover:bg-gray-50"
-                  }`}
-              >
-                {n.label}
-                <span className="text-xs text-gray-400">0{i + 1}</span>
-              </a>
+              n.isDropdown ? (
+                <div key={n.id} className="flex flex-col border-b border-gray-100 last:border-0">
+                  <div className="flex items-center justify-between rounded-xl px-5 py-4 text-[15px] font-bold text-gray-700">
+                    {n.label}
+                    <span className="text-xs text-gray-400">0{i + 1}</span>
+                  </div>
+                  <div className="flex flex-col pl-4 pr-8 pb-3 space-y-2">
+                    {solutions.map((s) => (
+                      <Link
+                        key={s.id}
+                        to={`/solutions/${s.id}`}
+                        onClick={() => setOpen(false)}
+                        className="text-[14px] text-gray-600 hover:text-brand transition-colors py-2"
+                      >
+                        {s.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={n.id}
+                  to={n.path || "/"}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-between rounded-xl px-5 py-4 text-[15px] font-bold transition border-b border-gray-100 last:border-0 ${active === n.id && location.pathname === "/"
+                    ? "bg-brand-soft text-brand"
+                    : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                >
+                  {n.label}
+                  <span className="text-xs text-gray-400">0{i + 1}</span>
+                </Link>
+              )
             ))}
-            <a
-              href="#contact"
-              onClick={() => {
-                onNav("contact");
-                setOpen(false);
-              }}
+            <Link
+              to="/#contact"
+              onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-5 py-4 text-[15px] font-bold text-white"
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" />
-            </a>
+            </Link>
           </nav>
         </div>
       </header>
@@ -1057,15 +1120,14 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
             <div className="text-right">
               <h4 className="font-display text-[16px] font-extrabold">بەستەرەکان</h4>
               <ul className="mt-5 space-y-3 text-[13.5px]">
-                {NAV.map((n) => (
+                {NAV.filter(n => !n.isDropdown).map((n) => (
                   <li key={n.id}>
-                    <a
-                      href={`#${n.id}`}
-                      onClick={() => onNav(n.id)}
+                    <Link
+                      to={n.path || "/"}
                       className="text-gray-400 transition hover:text-brand"
                     >
                       {n.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -1129,11 +1191,11 @@ function Footer({ onNav }: { onNav: (id: string) => void }) {
         {/* bottom bar */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-800 py-6 sm:flex-row">
           <div className="flex items-center gap-2 text-[12.5px] font-medium text-gray-500">
-            <button onClick={() => onNav("services")} className="px-4 py-4 transition hover:text-brand">دیزاین</button>
+            <Link to="/#works" className="px-4 py-4 transition hover:text-brand">دیزاین</Link>
             <span className="h-1 w-1 rounded-full bg-gray-700" />
-            <button onClick={() => onNav("about")} className="px-4 py-4 transition hover:text-brand">هونەر</button>
+            <Link to="/#about" className="px-4 py-4 transition hover:text-brand">هونەر</Link>
             <span className="h-1 w-1 rounded-full bg-gray-700" />
-            <button onClick={() => onNav("contact")} className="px-4 py-4 transition hover:text-brand">ئەندازیاری</button>
+            <Link to="/#contact" className="px-4 py-4 transition hover:text-brand">ئەندازیاری</Link>
           </div>
           <p className="text-[12.5px] text-gray-500">© 2026 ANTIKA FACTORY. هەموو مافەکان پارێزراون.</p>
         </div>
@@ -1203,11 +1265,30 @@ function BackToTop() {
   );
 }
 
+/* ----------------------------------- HomePage ----------------------------------- */
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <UseCases />
+      <Works />
+      <About />
+      <Process />
+      <WhyChooseUs />
+      <Capabilities />
+      <ContactCTA />
+    </>
+  );
+}
+
 /* ----------------------------------- App ----------------------------------- */
-export default function App() {
+function AppContent() {
   const [active, setActive] = useState("home");
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname !== "/") return;
+
     const ids = ["home", "works", "about", "contact"];
     const obs = new IntersectionObserver(
       (entries) => {
@@ -1222,22 +1303,26 @@ export default function App() {
       if (el) obs.observe(el);
     });
     return () => obs.disconnect();
-  }, []);
+  }, [location.pathname]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-white font-body text-gray-900">
+    <div dir="rtl" className="min-h-screen bg-white font-body text-gray-900 flex flex-col">
       <Header active={active} onNav={setActive} />
-      <main id="main-content">
-        <Hero />
-        <UseCases />
-        <Works />
-        <About />
-        <Process />
-        <WhyChooseUs />
-        <Capabilities />
-        <ContactCTA />
+      <main id="main-content" className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/solutions/:id" element={<SolutionPage />} />
+        </Routes>
       </main>
       <Footer onNav={setActive} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
