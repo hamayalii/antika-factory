@@ -1,32 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { SolutionPage } from "./pages/SolutionPage";
 import { solutions } from "./data/solutions";
+import { CapsulesPage } from "./pages/CapsulesPage";
+import { HousesPage } from "./pages/HousesPage";
+import { CategoryOverviewPage } from "./pages/CategoryOverviewPage";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
+import { LightingPage } from "./pages/LightingPage";
+import { ShelvesPage } from "./pages/ShelvesPage";
 import {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
-  ArrowUpLeft,
-  Brush,
   Check,
   ChevronDown,
   Clock,
-  Diamond,
   DraftingCompass,
   Factory,
-  House,
   Mail,
   MapPin,
   Menu,
   Palette,
   Phone,
-  Play,
-  Quote,
   Ruler,
   Send,
-  Sofa,
   Sparkles,
-  Star,
   X,
   MessageCircle,
   PhoneCall,
@@ -132,7 +130,7 @@ function Logo({ dark = false }: { dark?: boolean }) {
 /* ---------------------------------- Header ---------------------------------- */
 const NAV = [
   { id: "home", label: "سەرەکی", path: "/" },
-  { id: "works", label: "کارەکانمان", path: "/#works" },
+  { id: "products", label: "بەرهەمەکانمان", path: "/#products" },
   { id: "about", label: "دەربارەی ئێمە", path: "/#about" },
   { id: "contact", label: "پەیوەندیمان پێوە بکە", path: "/#contact" },
   { id: "solutions", label: "چارەسەرەکانمان", isDropdown: true },
@@ -154,7 +152,6 @@ function Header({
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const scrollPosition = useRef(0);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -261,7 +258,7 @@ function Header({
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
+      <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-200 ${scrolled ? "shadow-md" : "shadow-sm"}`} style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           {/* Logo RIGHT (first in RTL) */}
           <Logo />
@@ -301,8 +298,8 @@ function Header({
                   key={n.id}
                   to={n.path || "/"}
                   className={`nav-link text-[14.5px] font-semibold transition-colors ${(location.pathname === "/" ? active === n.id : location.pathname === n.path)
-                      ? "active"
-                      : "text-gray-600 hover:text-gray-900"
+                    ? "active"
+                    : "text-gray-600 hover:text-gray-900"
                     }`}
                 >
                   {n.label}
@@ -397,17 +394,17 @@ function Header({
 /* ---------------------------------- Hero Slider ---------------------------------- */
 const HERO_SLIDES = [
   {
-    tag: "لەگەڵ ئێمەدا",
-    title: "هونەر، دیزاین و ئەندازیاری",
-    desc: "تێکەڵکردن و وردبینی ئەندازیاری و داهێنانی هونەری بۆ بەدیهێنانی پرۆژەی ناوازە",
+    tag: "ئێمە هونەر و مۆدێرنمان بۆ ئێوە تێکەڵ کردووە",
+    title: "داهێنان لە دیزاین، وردی لە دروستکردن",
+    desc: "پێشکەشکردنی یەکە نیشتەجێبوونە مۆدێرنەکانمان بە ستانداری جیهانی و تێکەڵەیەک لە دیمەنی پانۆرامایی ٢٧٠ پلە، ئەزموونی ژیانێکی زیرەک و سیستەمێکی بەهێز و بەردەوامی بیناسازی.",
     img: "/images/work-capsule.png",
     cta1: "بینینی کارەکانمان",
     cta2: "دەربارەی ئێمە",
   },
   {
-    tag: "کوالێتی بەرز",
-    title: "دیزاینی مۆدێرن",
-    desc: "ئەنتیکا، تێکەڵەیەک لە هونەر و تەلارسازیی هاوچەرخ",
+    tag: "ئێمە هونەر و مۆدێرنمان بۆ ئێوە تێکەڵ کردووە",
+    title: "دیزاینێکی نوێ بۆ شێوازی ژیانێکی نوێ",
+    desc: "تێکەڵەیەک لە دیزاینی مۆدێرن و بەکارهێنانی جۆراوجۆر، لە ئۆفیسی سەربەخۆ و ژووری کۆبوونەوەوە تا دەگاتە کافێ و یەکەی گواستراوەی بازرگانی بە بەرزترین کوالێتی.",
     img: "/images/capsule-1.jpg",
     cta1: "خزمەتگوزارییەکان",
     cta2: "پەیوەندی",
@@ -436,6 +433,8 @@ function Hero() {
       id="home"
       className="hero-section relative overflow-hidden bg-gray-50 pt-24"
       style={{ scrollMarginTop: '80px' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -527,34 +526,34 @@ function Hero() {
 /* ---------------------------------- Use Cases Grid ---------------------------------- */
 const USE_CASES = [
   {
-    img: "/images/work-capsule.png",
-    title: "کەپسولەکان",
-    desc: "ژیانێکی مۆدێرن لە دیزاینێکی تایبەتدا",
+    img: "/images/baxcha-cabin.jpg",
+    title: "خانووی باخچە",
+    desc: "خانووی باخچە بەردەستە بە دیزاینێکی دڵگیر و بۆشاییەکی پێویست بۆ هەڵگرتنی کەل و پەلی باخچەکەت",
   },
   {
-    img: "/images/capsule-1.jpg",
-    title: "کەپسولی کۆفی برەیک",
-    desc: "گۆشەیەکی سەرنجڕاکێش بۆ حەوانەوە، خواردنەوەی قاوە و وەرگرتنی وزەی نوێ لە کاتی ماندوێتی کاردا.",
+    img: "/images/am-k.jpg",
+    title: "شوێنی تایبەت بە کۆفی برەیک",
+    desc: "کەپسولی AM • K بەردەستە بۆ شوێنێکی سەرنجڕاکێش بۆ حەوانەوە، خواردنەوەی قاوە و وەرگرتنی وزە لە کاتی ماندوێتی کاردا",
   },
   {
-    img: "/images/capsule-2.jpg",
-    title: "کەپسولی کۆڕ و کۆبوونەوەکان",
-    desc: "ژینگەیەکی بێدەنگکراو (Acoustic) و تایبەت بۆ ئەنجامدانی کۆبوونەوە و گفتوگۆ گرنگەکانت بەبێ تێکچوونی تەرکیز.",
+    img: "/images/am-t.jpg",
+    title: "ژووری کۆڕ و کۆبوونەوەکان",
+    desc: "کەپسولی AM • T بەردەستە بۆ ژینگەیەکی بێدەنگکراو (Acoustic) و تایبەت بۆ ئەنجامدانی کۆبوونەوە و گفتوگۆ گرنگەکانت بەبێ تێکچوونی تەرکیز",
   },
   {
-    img: "/images/capsule-3.jpg",
-    title: "کەپسولی خاڵی فرۆشتن",
-    desc: "دیزاینێکی مۆدێرنی بازرگانی بۆ نمایشکردن و فرۆشتنی ڕاستەوخۆی بەرهەمەکانت بە شێوازێک کە سەرنجی موشتەری ڕابکێشێت.",
+    img: "/images/am-g.jpg",
+    title: "ناوەندی خاڵی فرۆشتن",
+    desc: "کەپسولی AM • G بە دیزاینێکی مۆدێرنی بازرگانی بەردەستە بۆ نمایشکردن و فرۆشتنی ڕاستەوخۆی بەرهەمەکانت بە شێوازێک کە سەرنجی موشتەری ڕابکێشێت",
   },
   {
-    img: "/images/capsule-4.jpg",
-    title: "کەپسولی نوسینگە",
-    desc: "ئۆفیسێکی سەربەخۆ و ئاسوودە بە تەواوی پێداویستییەکانەوە، بۆ زیادکردنی بەرهەمداری و تەرکیزی کارکردن.",
+    img: "/images/watch-cabin.jpg",
+    title: "یەکەی چاودێری",
+    desc: "کەپسولی چاودێری AS بەردەستە بە دیزاینێکی مۆدێرنی و گونجاو بۆ یەکەکانی چاودێری",
   },
   {
-    img: "/images/capsule-5.jpg",
-    title: "کەپسولی کۆشک",
-    desc: "شوێنێکی گواستراوە و مۆدێرن بۆ خزمەتگوزاری کاتی، پێشانگاکان یان ئۆفەری تایبەتی پڕۆژەکەت.",
+    img: "/images/al-8.jpg",
+    title: "کەپسولی یەکەی نیشتەجێبوون",
+    desc: "کەپسولی AL • 8 بە دیزاینێکی مۆدێرنی جوان بەردەستە بۆ بۆ بەسەربردنی کاتێکی ئارام و خەوێکی قووڵ",
   },
 ];
 
@@ -611,7 +610,7 @@ function UseCases() {
   );
 }
 
-/* ---------------------------------- Works Grid ---------------------------------- */
+/* ---------------------------------- Products Grid (بەرهەمەکانمان) ---------------------------------- */
 type Work = {
   id: string;
   cat: string;
@@ -619,16 +618,27 @@ type Work = {
   title: string;
   desc: string;
   tag: string;
+  link: string;
 };
 
 const WORKS: Work[] = [
   {
     id: "capsule",
-    cat: "کەپسولەکان",
+    cat: "کەپسولە مۆدولارەکان",
     img: "/images/work-capsule.png",
     title: "کەپسولەکان",
-    desc: "ژیانێکی مۆدێرن لە دیزاینێکی تایبەتدا",
-    tag: "هونەری • مۆدێرن",
+    desc: "کەپسولە مۆدێرن و پێشکەوتووەکان بۆ نیشتەجێبوون، ئیش و کار، و خزمەتگوزاری لە زنجیرەکانی AL, AM, AS",
+    tag: "٣ زنجیرە • ١٦ مۆدێل",
+    link: "/products/capsules",
+  },
+  {
+    id: "houses",
+    cat: "خانووە مۆدولارەکان",
+    img: "/images/container-cabin-2.jpg",
+    title: "خانوو",
+    desc: "خانووی حاویە، خانووی ئاسایی، خانووی باخچە، و خانووی کوخ بە دیزاینی ئەندازیاری و کوالێتی بەرز",
+    tag: "٤ جۆری سەرەکی",
+    link: "/products/houses",
   },
   {
     id: "light",
@@ -637,6 +647,7 @@ const WORKS: Work[] = [
     title: "ڕووناکی",
     desc: "تێکەڵەیەک لە جوانیی سروشت و دیزاینی مۆدێرن بە شێوەیەکی بێهاوتا",
     tag: "کوالێتی بەرز • قەبارەی جیاواز",
+    link: "/products/lighting",
   },
   {
     id: "shelf",
@@ -645,36 +656,38 @@ const WORKS: Work[] = [
     title: "ڕەفەکان",
     desc: "ڕێکخستنێکی نموونەیی و پێدانی جوانییەکی تایبەت بە دیزاینی ناوەوە",
     tag: "جێگیر • سەلامەت",
+    link: "/products/shelves",
   },
 ];
 
 function Works() {
   return (
-    <section id="works" className="bg-gray-50 py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
+    <section id="products" className="relative bg-gray-50 py-16 sm:py-24" style={{ scrollMarginTop: '80px' }}>
+      <span id="works" className="absolute -top-20" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-8 text-center">
           <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
             <span className="h-[2px] w-6 rounded bg-brand" />
-            کارەکانمان
+            بەرهەمەکانمان
             <span className="h-[2px] w-6 rounded bg-brand" />
           </span>
           <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
             دروستکردنی ژینگەیەکی هونەری و مۆدێرن
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[15px] text-gray-600">
-            لە نەخشەسازیی لایتی ڕوناکی و ڕەفەکانەوە بگرە تا دەگاتە کەپسولەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
+            لە کەپسولە مۆدولارەکان و خانووی پێشکەوتوو تا دەگاتە نەخشەسازیی لایتی ڕووناکی و ڕەفەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
           </p>
         </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {WORKS.map((w, i) => (
-            <Reveal key={w.id} delay={i * 120}>
-              <article className="group overflow-hidden rounded-2xl bg-white shadow-md transition hover:shadow-lg">
-                <div className="zoom-img relative h-64 overflow-hidden sm:h-72">
+            <Reveal key={w.id} delay={i * 100}>
+              <article className="group overflow-hidden rounded-2xl bg-white shadow-md transition hover:shadow-lg flex flex-col h-full">
+                <Link to={w.link} className="zoom-img relative h-60 overflow-hidden block">
                   <img
                     src={w.img}
                     alt={w.title}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                     width="400"
@@ -684,17 +697,23 @@ function Works() {
                   <span className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold text-gray-900 backdrop-blur">
                     {w.tag}
                   </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-display text-[18px] font-bold text-gray-900">{w.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-[14px] text-gray-600">{w.desc}</p>
-                  <a
-                    href="#contact"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-brand-dark"
+                </Link>
+                <div className="p-5 flex flex-col flex-1 justify-between text-right">
+                  <div>
+                    <h3 className="font-display text-[18px] font-bold text-gray-900">
+                      <Link to={w.link} className="hover:text-brand transition">
+                        {w.title}
+                      </Link>
+                    </h3>
+                    <p className="mt-2 text-[13.5px] text-gray-600 leading-relaxed">{w.desc}</p>
+                  </div>
+                  <Link
+                    to={w.link}
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-brand-dark"
                   >
                     زیاتر بزانە
                     <ArrowLeft className="h-4 w-4" />
-                  </a>
+                  </Link>
                 </div>
               </article>
             </Reveal>
@@ -702,13 +721,13 @@ function Works() {
         </div>
 
         <Reveal delay={200} className="mt-10 text-center">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand"
+          <Link
+            to="/products/capsules"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand shadow-sm"
           >
-            هەموو کارەکانمان ببینە
+            بینینی سەرجەم کەپسولەکان
             <ArrowLeft className="h-4 w-4" />
-          </a>
+          </Link>
         </Reveal>
       </div>
     </section>
@@ -875,80 +894,8 @@ function Process() {
 }
 
 /* ---------------------------------- Why Choose Us ---------------------------------- */
-const WHY_CHOOSE = [
-  {
-    title: "دیزاینی مۆدێرن",
-    desc: "دیزاینی تایبەت و داهێنەرانە بە هەر پرۆژەیەک، تێکەڵەیەک لە هونەر و تەکنیک",
-    img: "/images/work-capsule.png",
-    reverse: false,
-  },
-  {
-    title: "کوالێتی بەرز",
-    desc: "بەکارهێنانی مەوادی ئۆرجیناڵ و کوالێتی بەرز بۆ دروستکردنی بەرهەمەکان",
-    img: "/images/work-lighting.jpg",
-    reverse: true,
-  },
-  {
-    title: "جێبەجێکردنی خێرا",
-    desc: "خێرا و دروست لە کاتی دیاریکراودا، بە پلانێکی وردبینی تا 1mm",
-    img: "/images/work-shelves.jpg",
-    reverse: false,
-  },
-];
-
 function WhyChooseUs() {
-  // return (
-  //   <section className="bg-white py-16 sm:py-24">
-  //     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  //       <Reveal className="mb-12 text-center">
-  //         <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
-  //           <span className="h-[2px] w-6 rounded bg-brand" />
-  //           بۆچی ئێمە؟
-  //           <span className="h-[2px] w-6 rounded bg-brand" />
-  //         </span>
-  //         <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
-  //           هۆکارەکانی هەڵبژاردنی ئێمە
-  //         </h2>
-  //       </Reveal>
-
-  //       <div className="space-y-16">
-  //         {WHY_CHOOSE.map((item, i) => (
-  //           <Reveal key={item.title} delay={i * 150}>
-  //             <div className={`grid items-center gap-8 lg:gap-16 ${item.reverse ? 'lg:grid-cols-2' : 'lg:grid-cols-2'}`}>
-  //               <div className={`order-2 ${item.reverse ? 'lg:order-1' : 'lg:order-2'}`}>
-  //                 <div className="zoom-img overflow-hidden rounded-2xl shadow-lg">
-  //                   <img
-  //                     src={item.img}
-  //                     alt={item.title}
-  //                     className="h-[300px] w-full object-cover sm:h-[400px]"
-  //                     loading="lazy"
-  //                     width="600"
-  //                     height="400"
-  //                   />
-  //                 </div>
-  //               </div>
-  //               <div className={`order-1 text-right ${item.reverse ? 'lg:order-2' : 'lg:order-1'}`}>
-  //                 <h3 className="font-display text-[28px] font-black text-gray-900 sm:text-[36px]">
-  //                   {item.title}
-  //                 </h3>
-  //                 <p className="mt-4 text-[16px] text-gray-600 leading-relaxed">
-  //                   {item.desc}
-  //                 </p>
-  //                 <a
-  //                   href="#contact"
-  //                   className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand transition hover:text-brand-dark"
-  //                 >
-  //                   زیاتر بزانە
-  //                   <ArrowLeft className="h-4 w-4" />
-  //                 </a>
-  //               </div>
-  //             </div>
-  //           </Reveal>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   </section>
-  // );
+  return null;
 }
 
 /* ---------------------------------- Design Capabilities ---------------------------------- */
@@ -1045,7 +992,7 @@ function ContactCTA() {
 }
 
 /* ---------------------------------- Footer ---------------------------------- */
-function Footer({ onNav }: { onNav: (id: string) => void }) {
+function Footer({ onNav: _onNav }: { onNav?: (id: string) => void }) {
   const [form, setForm] = useState({ name: "", email: "", msg: "" });
   const [sent, setSent] = useState(false);
 
@@ -1290,11 +1237,13 @@ function AppContent() {
   useEffect(() => {
     if (location.pathname !== "/") return;
 
-    const ids = ["home", "works", "about", "contact"];
+    const ids = ["home", "products", "works", "about", "contact"];
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
+          if (e.isIntersecting) {
+            setActive(e.target.id === "works" ? "products" : e.target.id);
+          }
         });
       },
       { rootMargin: "-40% 0px -55% 0px" }
@@ -1313,6 +1262,23 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/solutions/:id" element={<SolutionPage />} />
+
+          {/* Product and Category pages */}
+          <Route path="/products/capsules" element={<CapsulesPage />} />
+          <Route path="/products/houses" element={<HousesPage />} />
+          <Route path="/what-we-do" element={<CapsulesPage />} />
+          <Route path="/products" element={<CapsulesPage />} />
+          <Route path="/products/lighting" element={<LightingPage />} />
+          <Route path="/products/shelves" element={<ShelvesPage />} />
+          <Route path="/products/category/:categorySlug" element={<CategoryOverviewPage />} />
+          <Route path="/products/am" element={<CategoryOverviewPage />} />
+          <Route path="/products/as" element={<CategoryOverviewPage />} />
+          <Route path="/products/al" element={<CategoryOverviewPage />} />
+          <Route path="/products/container-house" element={<CategoryOverviewPage />} />
+          <Route path="/products/standard-house" element={<CategoryOverviewPage />} />
+          <Route path="/products/garden-house" element={<CategoryOverviewPage />} />
+          <Route path="/products/cabin-house" element={<CategoryOverviewPage />} />
+          <Route path="/products/:slug" element={<ProductDetailPage />} />
         </Routes>
       </main>
       <Footer onNav={setActive} />
