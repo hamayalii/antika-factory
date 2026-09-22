@@ -15,14 +15,10 @@ import {
   Check,
   ChevronDown,
   Clock,
-  DraftingCompass,
-  Factory,
   Mail,
   MapPin,
   Menu,
-  Palette,
   Phone,
-  Ruler,
   Send,
   Sparkles,
   X,
@@ -725,7 +721,7 @@ function Works() {
             to="/products/capsules"
             className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand shadow-sm"
           >
-            بینینی سەرجەم کەپسولەکان
+            بینینی سەرجەم بەرهەمەکانمان
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Reveal>
@@ -898,61 +894,8 @@ function WhyChooseUs() {
   return null;
 }
 
-/* ---------------------------------- Design Capabilities ---------------------------------- */
-const CAPABILITIES = [
-  {
-    icon: DraftingCompass,
-    title: "تەلارسازی",
-    desc: "دیزاینی ڕەفە، کۆشک و کەپسول بە ستانداردی جیهانی",
-  },
-  {
-    icon: Palette,
-    title: "دێکۆرات",
-    desc: "هەڵبژاردن و گونجاندنی باشترین ڕەنگ و کەرەستە",
-  },
-  {
-    icon: Ruler,
-    title: "ئەندازیاری",
-    desc: "دانانی پلان و پێوانەی وردبینی تا 1mm",
-  },
-  {
-    icon: Factory,
-    title: "بەرهەمهێنان",
-    desc: "کارگەی تایبەتی خۆمان بۆ کوالێتی بەرز",
-  },
-];
-
 function Capabilities() {
-  return (
-    <section className="bg-gray-50 py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="mb-12 text-center">
-          <span className="inline-flex items-center gap-2 text-[14px] font-bold text-brand">
-            <span className="h-[2px] w-6 rounded bg-brand" />
-            تواناکانمان
-            <span className="h-[2px] w-6 rounded bg-brand" />
-          </span>
-          <h2 className="mx-auto mt-4 max-w-2xl font-display font-black leading-[1.3] text-gray-900" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
-            دیزاین و تواناکان
-          </h2>
-        </Reveal>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {CAPABILITIES.map((cap, i) => (
-            <Reveal key={cap.title} delay={i * 100}>
-              <div className="rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md">
-                <span className="grid h-14 w-14 place-items-center rounded-xl bg-brand-soft text-brand">
-                  <cap.icon className="h-6 w-6" strokeWidth={1.7} />
-                </span>
-                <h3 className="mt-4 font-display text-[18px] font-bold text-gray-900">{cap.title}</h3>
-                <p className="mt-2 text-[14px] text-gray-600">{cap.desc}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 }
 
 /* ---------------------------------- Contact CTA Band ---------------------------------- */

@@ -637,6 +637,65 @@ export const houseProducts = verifiedProducts.filter((p) =>
   ["container-house", "standard-house", "garden-house", "cabin-house"].includes(p.categoryId)
 );
 
+export const lightingProducts: VerifiedProduct[] = [
+  {
+    id: "lighting-ambient",
+    slug: "lighting",
+    categoryId: "lighting",
+    categoryTitleKu: "لایتی ڕووناکی",
+    titleKu: "لایتی ڕووناکی هونەری",
+    titleEn: "Artistic Ambient Lighting",
+    shortDescriptionKu: "تێکەڵەیەک لە جوانیی سروشت و دیزاینی مۆدێرن بە شێوەیەکی بێهاوتا لە دار و کانزا.",
+    descriptionKu: "دیزاین و دروستکردنی لایتی ڕووناکی مۆدێرن و هونەری لە کارگەی ئەنتیکا بە ستانداردی بەرز بۆ ناوماڵ، کافێ، ئۆفیس و شوێنە تایبەتەکان.",
+    dimensionsRaw: "بەپێی داواکاری کڕیار",
+    materials: "دار و کانزا و LED",
+    applicationsKu: ["ناوماڵ", "کافێ و ڕێستۆرانت", "ئۆفیس و شوێنی کار"],
+    featuresKu: [
+      { title: "دیزاینی دەستکرد", desc: "دیزاینی تایبەت و بێهاوتا بە کەرەستەی سروشتی" },
+      { title: "ڕووناکی کەم‌مەسرەف", desc: "سیستەمی پێشکەوتووی LED بە بەکارهێنانی کەمترین وزە" },
+    ],
+    images: ["/images/work-lighting.jpg"],
+    verificationStatus: "VERIFIED",
+    cta: {
+      primaryKu: "داوای نرخ بکە",
+      secondaryKu: "پەیوەندیمان پێوە بکە",
+    },
+  },
+];
+
+export const shelvesProducts: VerifiedProduct[] = [
+  {
+    id: "shelves-modular",
+    slug: "shelves",
+    categoryId: "shelves",
+    categoryTitleKu: "ڕەفەکان",
+    titleKu: "ڕەفەی ئەندازیاری و مۆدێرن",
+    titleEn: "Modern Engineering Shelves",
+    shortDescriptionKu: "ڕێکخستنێکی نموونەیی و پێدانی جوانییەکی تایبەت لە پۆڵا و ئاسن و دار.",
+    descriptionKu: "دیزاین و دروستکردنی ڕەفەی ئەندازیاری و مۆدێرن بە کوالێتی باڵا بۆ ناوماڵ، کارگە، مارکێت و ئۆفیس.",
+    dimensionsRaw: "بەپێی پێوانەی شوێنەکەت",
+    materials: "پۆڵا، ئاسن، داری سروشتی",
+    applicationsKu: ["ناوماڵ", "ئۆفیس", "کافێ و مارکێت", "کارگە و کۆگا"],
+    featuresKu: [
+      { title: "پتەو و سەلامەت", desc: "بەرگەی کێشی بەرز دەگرێت بە سەلامەتی تەواو" },
+      { title: "دیزاینی پیشەسازی مۆدێرن", desc: "گونجاو لەگەڵ دیزاینی ناوەوەی هاوچەرخ" },
+    ],
+    images: ["/images/work-shelves.jpg"],
+    verificationStatus: "VERIFIED",
+    cta: {
+      primaryKu: "داوای نرخ بکە",
+      secondaryKu: "پەیوەندیمان پێوە بکە",
+    },
+  },
+];
+
+export const allProducts: VerifiedProduct[] = [
+  ...capsuleProducts,
+  ...houseProducts,
+  ...lightingProducts,
+  ...shelvesProducts,
+];
+
 export function isHouseCategory(categoryIdOrSlug: string): boolean {
   return ["container-house", "standard-house", "garden-house", "cabin-house"].includes(
     categoryIdOrSlug
