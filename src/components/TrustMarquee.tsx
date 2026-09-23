@@ -131,7 +131,7 @@ export function TrustMarquee() {
           }}
         >
           <span style={{ display: "inline-block", height: "2px", width: "24px", borderRadius: "9999px", background: "#ff5a00" }} />
-          ئەو شوێنانەی متمانەیان بە ئێمەکرد
+          ئەو شوێنانەی متمانەیان بە ئێمەکردووە
           <span style={{ display: "inline-block", height: "2px", width: "24px", borderRadius: "9999px", background: "#ff5a00" }} />
         </span>
         <h2

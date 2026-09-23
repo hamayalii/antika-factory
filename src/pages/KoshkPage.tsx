@@ -78,7 +78,7 @@ export function KoshkPage() {
             </h1>
             <p className="mt-4 text-[15.5px] sm:text-[16.5px] text-gray-600 leading-relaxed font-light">
               دیزاین و بەرهەمهێنانی کۆشکی بازرگانی مۆدێرن لە کارگەی ئەنتیکا فاکتۆری بۆ شوێنی فرۆشگا،
-              پارک، نیشتەجێبوون، و بەکارهێنانی بازرگانی و کۆمەڵایەتی.
+              خواردن، خواردەمەنی و بەکارهێنانی بازرگانی
             </p>
           </Reveal>
         </div>
@@ -91,11 +91,10 @@ export function KoshkPage() {
           <div className="mb-10 flex flex-wrap items-center justify-center gap-2.5">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${
-                selectedCategory === "all"
-                  ? "bg-brand text-white shadow-md"
-                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
-              }`}
+              className={`rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${selectedCategory === "all"
+                ? "bg-brand text-white shadow-md"
+                : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                }`}
             >
               هەموو کۆشکەکان ({koshkProducts.length})
             </button>
@@ -106,11 +105,10 @@ export function KoshkPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`rounded-full px-4 py-2.5 text-[13.5px] font-bold transition-all ${
-                    selectedCategory === cat.id
-                      ? "bg-brand text-white shadow-md"
-                      : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
-                  }`}
+                  className={`rounded-full px-4 py-2.5 text-[13.5px] font-bold transition-all ${selectedCategory === cat.id
+                    ? "bg-brand text-white shadow-md"
+                    : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                    }`}
                 >
                   {cat.titleKu} ({count})
                 </button>
@@ -119,7 +117,7 @@ export function KoshkPage() {
           </div>
 
           {/* Products Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((prod, i) => (
               <Reveal key={prod.id} delay={i * 40}>
                 <ProductCard product={prod} />
@@ -172,7 +170,7 @@ export function KoshkPage() {
                 </span>
                 <div>
                   <h3 className="font-display text-[17px] font-bold text-gray-900">
-                    بەدوای کەپسولە یان خانووکانەوە دەگەڕێیت؟
+                    بەدوای کەپسول یان خانوودا دەگەڕێیت؟
                   </h3>
                   <p className="text-[13.5px] text-gray-600 mt-1">
                     کەپسولەکانی AL، AM و AS، و هەروەها خانووی حاویە و باخچە لە بەشی تایبەتیاندا ببینە.

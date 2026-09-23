@@ -9,6 +9,7 @@ import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { LightingPage } from "./pages/LightingPage";
 import { ShelvesPage } from "./pages/ShelvesPage";
 import { KoshkPage } from "./pages/KoshkPage";
+import { AllProductsPage } from "./pages/AllProductsPage";
 import { TrustMarquee } from "./components/TrustMarquee";
 import {
   ArrowLeft,
@@ -634,7 +635,7 @@ const WORKS: Work[] = [
     cat: "خانووە مۆدولارەکان",
     img: "/images/container-cabin-2.jpg",
     title: "خانوو",
-    desc: "خانووی حاویە، خانووی ئاسایی، خانووی باخچە، خانووی کوخ و خانووی کۆنکریت بە دیزاینی ئەندازیاری و کوالێتی بەرز",
+    desc: "خانووی حاویە، کابینەی ئاسایی، خانووی باخچە، خانووی کوخ و خانووی کۆنکریت بە دیزاینی ئەندازیاری و کوالێتی بەرز",
     tag: "٥ جۆری سەرەکی",
     link: "/products/houses",
   },
@@ -646,24 +647,6 @@ const WORKS: Work[] = [
     desc: "کۆشکی بازرگانی KA بۆ فرۆشگا، پارک، نیشتەجێبوون و بەکارهێنانی بازرگانی بە مۆدێلی جیاواز",
     tag: "KA • ٤ مۆدێل",
     link: "/products/koshk",
-  },
-  {
-    id: "light",
-    cat: "لایتی ڕووناکی",
-    img: "/images/work-lighting.jpg",
-    title: "ڕووناکی",
-    desc: "تێکەڵەیەک لە جوانیی سروشت و دیزاینی مۆدێرن بە شێوەیەکی بێهاوتا",
-    tag: "کوالێتی بەرز • قەبارەی جیاواز",
-    link: "/products/lighting",
-  },
-  {
-    id: "shelf",
-    cat: "ڕەفەکان",
-    img: "/images/work-shelves.jpg",
-    title: "ڕەفەکان",
-    desc: "ڕێکخستنێکی نموونەیی و پێدانی جوانییەکی تایبەت بە دیزاینی ناوەوە",
-    tag: "جێگیر • سەلامەت",
-    link: "/products/shelves",
   },
 ];
 
@@ -682,7 +665,7 @@ function Works() {
             دروستکردنی ژینگەیەکی هونەری و مۆدێرن
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[15px] text-gray-600">
-            لە کەپسولە مۆدولارەکان، خانوو و کۆشکی بازرگانی تا دەگاتە نەخشەسازیی لایتی ڕووناکی و ڕەفەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
+            لە کەپسولە مۆدولارەکان، خانوو و کۆشکی بازرگانی، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
           </p>
         </Reveal>
 
@@ -729,7 +712,7 @@ function Works() {
 
         <Reveal delay={200} className="mt-10 text-center">
           <Link
-            to="/products/capsules"
+            to="/products"
             className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-[14px] font-bold text-gray-900 transition hover:border-brand hover:text-brand shadow-sm"
           >
             بینینی سەرجەم بەرهەمەکانمان
@@ -1222,8 +1205,8 @@ function AppContent() {
           <Route path="/products/capsules" element={<CapsulesPage />} />
           <Route path="/products/houses" element={<HousesPage />} />
           <Route path="/products/koshk" element={<KoshkPage />} />
-          <Route path="/what-we-do" element={<CapsulesPage />} />
-          <Route path="/products" element={<CapsulesPage />} />
+          <Route path="/what-we-do" element={<AllProductsPage />} />
+          <Route path="/products" element={<AllProductsPage />} />
           <Route path="/products/lighting" element={<LightingPage />} />
           <Route path="/products/shelves" element={<ShelvesPage />} />
           <Route path="/products/category/:categorySlug" element={<CategoryOverviewPage />} />
