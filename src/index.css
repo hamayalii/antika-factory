@@ -119,6 +119,20 @@ html {
   min-height: 100vh;
 }
 
+.hero-background {
+  object-position: center center;
+  animation: hero-zoom 12s ease-out both;
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 @supports (min-height: 100svh) {
   .hero-section {
     min-height: 100svh;
@@ -390,5 +404,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee-ltr {
     animation-play-state: paused;
+  }
+
+  .hero-background {
+    animation: none;
   }
 }

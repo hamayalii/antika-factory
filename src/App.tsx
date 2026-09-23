@@ -151,6 +151,8 @@ function Header({
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const scrollPosition = useRef(0);
   const location = useLocation();
+  const isHome = location.pathname === "/";
+  const isOverlay = isHome && !scrolled && !open;
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -257,10 +259,16 @@ function Header({
 
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-200 ${scrolled ? "shadow-md" : "shadow-sm"}`} style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${isOverlay
+          ? "bg-black/25 text-white backdrop-blur-[2px]"
+          : "bg-white text-gray-900 shadow-md"
+          }`}
+        style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           {/* Logo RIGHT (first in RTL) */}
-          <Logo />
+          <Logo dark={isOverlay} />
 
           {/* Nav center */}
           <nav className="hidden items-center gap-8 lg:flex">
@@ -269,7 +277,7 @@ function Header({
                 <div key={n.id} className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={`nav-link flex items-center gap-1 text-[14.5px] font-semibold transition-colors ${location.pathname.includes('/solutions') ? "active" : "text-gray-600 hover:text-gray-900"
+                    className={`nav-link flex items-center gap-1 text-[14.5px] font-semibold transition-colors ${location.pathname.includes('/solutions') ? "active" : isOverlay ? "text-white/90 hover:text-white" : "text-gray-600 hover:text-gray-900"
                       }`}
                   >
                     {n.label}
@@ -298,7 +306,7 @@ function Header({
                   to={n.path || "/"}
                   className={`nav-link text-[14.5px] font-semibold transition-colors ${(location.pathname === "/" ? active === n.id : location.pathname === n.path)
                     ? "active"
-                    : "text-gray-600 hover:text-gray-900"
+                    : isOverlay ? "text-white/90 hover:text-white" : "text-gray-600 hover:text-gray-900"
                     }`}
                 >
                   {n.label}
@@ -311,7 +319,10 @@ function Header({
           <div className="flex items-center gap-2">
             <Link
               to="/#contact"
-              className="hidden items-center gap-2 rounded-full bg-brand px-6 py-3 text-[14px] font-bold text-white transition hover:bg-brand-dark sm:inline-flex"
+              className={`hidden items-center gap-2 rounded-full px-6 py-3 text-[14px] font-bold transition sm:inline-flex ${isOverlay
+                ? "border border-white/70 bg-white/10 text-white hover:bg-white hover:text-gray-900"
+                : "bg-brand text-white hover:bg-brand-dark"
+                }`}
             >
               پەیوەندیمان پێوە بکە
               <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
@@ -322,7 +333,10 @@ function Header({
               aria-label={open ? "داخستنی مێنیو" : "کردنەوەی مێنیو"}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="grid h-11 w-11 place-items-center rounded-full border border-gray-200 bg-white text-gray-700 transition hover:border-brand hover:text-brand lg:hidden sm:h-12 sm:w-12"
+              className={`grid h-11 w-11 place-items-center rounded-full border transition hover:border-brand hover:text-brand lg:hidden sm:h-12 sm:w-12 ${isOverlay
+                ? "border-white/70 bg-white/10 text-white"
+                : "border-gray-200 bg-white text-gray-700"
+                }`}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -396,7 +410,7 @@ const HERO_SLIDES = [
     tag: "ئێمە هونەر و مۆدێرنمان بۆ ئێوە تێکەڵ کردووە",
     title: "داهێنان لە دیزاین، وردی لە دروستکردن",
     desc: "پێشکەشکردنی یەکە نیشتەجێبوونە مۆدێرنەکانمان بە ستانداری جیهانی و تێکەڵەیەک لە دیمەنی پانۆرامایی ٢٧٠ پلە، ئەزموونی ژیانێکی زیرەک و سیستەمێکی بەهێز و بەردەوامی بیناسازی.",
-    img: "/images/work-capsule.png",
+    img: "/images/hero-antika.png",
     cta1: "بینینی کارەکانمان",
     cta2: "دەربارەی ئێمە",
   },
@@ -430,94 +444,88 @@ function Hero() {
   return (
     <section
       id="home"
-      className="hero-section relative overflow-hidden bg-gray-50 pt-24"
+      className="hero-section relative isolate overflow-hidden bg-gray-950"
       style={{ scrollMarginTop: '80px' }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Text Content */}
-          <div className="text-center lg:text-right">
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-2 text-[13px] font-semibold text-brand">
-                {slide.tag}
-              </span>
-            </Reveal>
-            <Reveal delay={100}>
-              <h1 className="mt-6 font-display font-black leading-[1.2] text-gray-900" style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
-                {slide.title}
-              </h1>
-            </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-6 text-[17px] font-light leading-relaxed text-gray-600 lg:text-[19px]">
-                {slide.desc}
-              </p>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-                <a
-                  href="#works"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-[15px] font-bold text-white transition hover:bg-brand-dark w-full sm:w-auto"
-                >
-                  {slide.cta1}
-                  <ArrowLeft className="h-4 w-4" />
-                </a>
-                <a
-                  href="#about"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-gray-200 bg-white px-8 py-4 text-[15px] font-bold text-gray-900 transition hover:border-brand hover:text-brand w-full sm:w-auto"
-                >
-                  {slide.cta2}
-                </a>
-              </div>
-            </Reveal>
-          </div>
+      <img
+        src={slide.img}
+        alt=""
+        aria-hidden="true"
+        className="hero-background absolute inset-0 h-full w-full object-cover"
+        width="1920"
+        height="960"
+        fetchPriority="high"
+      />
+      <div className="absolute inset-0 bg-gradient-to-l from-black/75 via-black/35 to-black/15" />
+      <div className="absolute inset-0 bg-black/10" />
 
-          {/* Image */}
-          <Reveal delay={150} className="relative">
-            <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
-              <img
-                src={slide.img}
-                alt={slide.title}
-                className="h-[400px] w-full object-cover sm:h-[500px] lg:h-[600px]"
-                width="800"
-                height="600"
-                fetchPriority="high"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-center px-4 pb-20 pt-32 sm:px-6 sm:pb-24 lg:px-8">
+        <div className="w-full max-w-2xl text-center lg:mr-0 lg:text-right">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 border-b-2 border-brand px-1 pb-2 text-[13px] font-semibold text-white drop-shadow-md">
+              {slide.tag}
+            </span>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1 className="mt-6 font-display font-black leading-[1.2] text-white drop-shadow-lg" style={{ fontSize: 'clamp(36px, 6vw, 68px)' }}>
+              {slide.title}
+            </h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-6 text-[17px] font-light leading-relaxed text-white/90 drop-shadow-md lg:text-[19px]">
+              {slide.desc}
+            </p>
+          </Reveal>
+          <Reveal delay={300}>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+              <a
+                href="#works"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-[15px] font-bold text-white shadow-lg transition hover:bg-brand-dark sm:w-auto"
+              >
+                {slide.cta1}
+                <ArrowLeft className="h-4 w-4" />
+              </a>
+              <a
+                href="#about"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/70 bg-black/10 px-8 py-4 text-[15px] font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-900 sm:w-auto"
+              >
+                {slide.cta2}
+              </a>
             </div>
-
-            {/* Slider Controls */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
-              {HERO_SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`h-2 w-2 rounded-full transition ${i === current ? "bg-brand w-8" : "bg-white/50 hover:bg-white"
-                    }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Arrow Controls */}
-            <button
-              onClick={prev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/90 text-gray-900 shadow-lg transition hover:bg-white"
-              aria-label="Previous slide"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-            <button
-              onClick={next}
-              className="absolute right-4 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-white/90 text-gray-900 shadow-lg transition hover:bg-white"
-              aria-label="Next slide"
-            >
-              <ArrowRight className="h-5 w-5" />
-            </button>
           </Reveal>
         </div>
       </div>
+
+      {/* Slider Controls */}
+      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2">
+        {HERO_SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2 w-2 rounded-full transition ${i === current ? "w-8 bg-brand" : "bg-white/50 hover:bg-white"
+              }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Arrow Controls */}
+      <button
+        onClick={prev}
+        className="absolute bottom-6 left-4 grid h-11 w-11 place-items-center rounded-full border border-white/40 bg-black/20 text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-900 sm:left-8"
+        aria-label="Previous slide"
+      >
+        <ArrowLeft className="h-5 w-5" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute bottom-6 right-4 grid h-11 w-11 place-items-center rounded-full border border-white/40 bg-black/20 text-white backdrop-blur-sm transition hover:bg-white hover:text-gray-900 sm:right-8"
+        aria-label="Next slide"
+      >
+        <ArrowRight className="h-5 w-5" />
+      </button>
     </section>
   );
 }
