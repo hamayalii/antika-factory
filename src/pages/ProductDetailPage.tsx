@@ -15,9 +15,10 @@ import {
   HelpCircle,
   Building2,
   Hash,
-  Square
+  Square,
+  Clock,
 } from "lucide-react";
-import { getProductBySlug, getRelatedProducts, getCategoryBySlug, isHouseProduct } from "../data/productData";
+import { getProductBySlug, getRelatedProducts, getCategoryBySlug, isHouseProduct, isKoshkProduct } from "../data/productData";
 import { ProductCard } from "../components/ProductCard";
 import { VerificationPlaceholder } from "../components/VerificationPlaceholder";
 import { Reveal } from "../components/Reveal";
@@ -27,6 +28,24 @@ export function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
   const category = product ? getCategoryBySlug(product.categoryId) : undefined;
+
+  const sectionLink = product && isKoshkProduct(product)
+    ? "/products/koshk"
+    : product && isHouseProduct(product)
+      ? "/products/houses"
+      : "/products/capsules";
+
+  const sectionTitle = product && isKoshkProduct(product)
+    ? "کۆشکەکان"
+    : product && isHouseProduct(product)
+      ? "خانوو"
+      : "کەپسولەکان";
+
+  const sectionAllTitle = product && isKoshkProduct(product)
+    ? "بینینی سەرجەم کۆشکەکان"
+    : product && isHouseProduct(product)
+      ? "بینینی سەرجەم جۆرەکانی خانوو"
+      : "بینینی سەرجەم کەپسولەکان";
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -111,10 +130,10 @@ export function ProductDetailPage() {
             </li>
             <li className="flex items-center gap-2">
               <Link
-                to={product && isHouseProduct(product) ? "/products/houses" : "/products/capsules"}
+                to={sectionLink}
                 className="transition hover:text-brand"
               >
-                {product && isHouseProduct(product) ? "خانوو" : "کەپسولەکان"}
+                {sectionTitle}
               </Link>
               <ChevronLeft className="h-3.5 w-3.5 text-gray-400" />
             </li>
@@ -159,6 +178,13 @@ export function ProductDetailPage() {
                   <span className="text-xs font-semibold text-gray-400">
                     {product.titleEn}
                   </span>
+
+                  {product.isComingSoon && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-300 px-3 py-1 text-[12.5px] font-bold text-amber-800 shadow-sm">
+                      <Clock className="h-3.5 w-3.5 text-amber-600" />
+                      بەم زووانە بەردەست ئەبێت..!
+                    </span>
+                  )}
                 </div>
               </Reveal>
 
@@ -212,6 +238,19 @@ export function ProductDetailPage() {
                       className="h-full w-full object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
                       onClick={() => setLightboxOpen(true)}
                     />
+
+                    {/* Coming Soon Overlay Badge on Image
+                    {product.isComingSoon && (
+                      <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                        <div className="flex flex-col items-center gap-3">
+                          <span className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-3 text-[16px] font-black shadow-2xl border border-white/40 tracking-wide backdrop-blur-sm">
+                            <Clock className="h-5 w-5" />
+                            بەم زووانە بەردەست ئەبێت..!
+                          </span>
+                        </div>
+                      </div>
+                    )} */}
+
                     <button
                       onClick={() => setLightboxOpen(true)}
                       className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur hover:bg-black/80 transition"
@@ -266,8 +305,39 @@ export function ProductDetailPage() {
             </h2>
           </Reveal>
 
+          {/* Coming soon notice banner */}
+          {product.isComingSoon && (
+            <div className="max-w-3xl mx-auto mb-8 rounded-2xl bg-amber-50 border-2 border-amber-300 p-5 text-right flex items-center gap-4 shadow-sm">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-amber-500 text-white shadow-md">
+                <Clock className="h-6 w-6" />
+              </span>
+              <div>
+                <h3 className="font-display text-[16px] font-extrabold text-amber-900">
+                  بەم زووانە بەردەست ئەبێت..!
+                </h3>
+                <p className="text-[13.5px] text-amber-800 mt-1 leading-relaxed">
+                  ئەم بەرهەمە لە قۆناغی ئامادەکاری و دیزایندایە و بەم زووانە بەردەست دەبێت. بۆ داواکاری پێشوەختە پەیوەندیمان پێوە بکە.
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="max-w-3xl mx-auto rounded-2xl bg-gray-50 border border-gray-200/80 overflow-hidden shadow-sm">
             <dl className="divide-y divide-gray-200/70">
+              {/* Coming Soon status in specification list */}
+              {product.isComingSoon && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 px-6 py-4.5 bg-amber-50/80 border-b border-amber-200">
+                  <dt className="text-[14px] font-bold text-amber-900 flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-amber-600 shrink-0" />
+                    دۆخی بەرهەم
+                  </dt>
+                  <dd className="sm:col-span-2 text-[14.5px] font-bold text-amber-800 flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+                    بەم زووانە بەردەست ئەبێت..!
+                  </dd>
+                </div>
+              )}
+
               {/* Product Category */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 px-6 py-4.5 bg-white">
                 <dt className="text-[14px] font-bold text-gray-900 flex items-center gap-2">
@@ -475,10 +545,10 @@ export function ProductDetailPage() {
 
             <div className="mt-10 text-center">
               <Link
-                to={product && isHouseProduct(product) ? "/products/houses" : "/products/capsules"}
+                to={sectionLink}
                 className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 px-8 py-3 text-[14px] font-bold text-gray-800 transition hover:border-brand hover:text-brand"
               >
-                {product && isHouseProduct(product) ? "بینینی سەرجەم جۆرەکانی خانوو" : "بینینی سەرجەم کەپسولەکان"}
+                {sectionAllTitle}
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </div>

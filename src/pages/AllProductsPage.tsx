@@ -11,11 +11,13 @@ import {
   Box,
   Lightbulb,
   Grid,
+  Store,
 } from "lucide-react";
 import {
   allProducts,
   capsuleProducts,
   houseProducts,
+  koshkProducts,
   lightingProducts,
   shelvesProducts,
 } from "../data/productData";
@@ -23,7 +25,7 @@ import { ProductCard } from "../components/ProductCard";
 import { Reveal } from "../components/Reveal";
 import { SEO } from "../components/SEO";
 
-type FilterTab = "all" | "capsules" | "houses" | "lighting" | "shelves";
+type FilterTab = "all" | "capsules" | "houses" | "koshk" | "lighting" | "shelves";
 
 export function AllProductsPage() {
   const [selectedTab, setSelectedTab] = useState<FilterTab>("all");
@@ -38,6 +40,8 @@ export function AllProductsPage() {
         return capsuleProducts;
       case "houses":
         return houseProducts;
+      case "koshk":
+        return koshkProducts;
       case "lighting":
         return lightingProducts;
       case "shelves":
@@ -53,7 +57,7 @@ export function AllProductsPage() {
     <div className="bg-gray-50 pt-24 min-h-screen text-right">
       <SEO
         title="سەرجەم بەرهەمەکانمان | کارگەی ئەنتیکا"
-        description="سەرجەم بەرهەمەکانی کارگەی ئەنتیکا: کەپسولە مۆدیولارەکان، خانووە سەربەخۆکان، لایتی ڕووناکی، و ڕەفەی ئەندازیاری."
+        description="سەرجەم بەرهەمەکانی کارگەی ئەنتیکا: کەپسولە مۆدیولارەکان، خانووە سەربەخۆکان، کۆشکە بازرگانییەکان، لایتی ڕووناکی، و ڕەفەی ئەندازیاری."
         canonical="https://antika-factory.netlify.app/products"
       />
 
@@ -90,7 +94,7 @@ export function AllProductsPage() {
               تەواوی بەرهەمەکانی کارگەی ئەنتیکا
             </h1>
             <p className="mt-4 text-[15.5px] sm:text-[16.5px] text-gray-600 leading-relaxed font-light">
-              پێشانگای گشتیی سەرجەم بەرهەمەکانمان: کەپسولە پێشکەوتووەکان، خانووە سەربەخۆ و مۆدیولارەکان، لایتی ڕووناکی هونەری، و ڕەفە ئەندازیارییەکان.
+              پێشانگای گشتیی سەرجەم بەرهەمەکانمان: کەپسولە پێشکەوتووەکان، خانووە سەربەخۆ و مۆدیولارەکان، کۆشکی بازرگانی، لایتی ڕووناکی هونەری، و ڕەفە ئەندازیارییەکان.
             </p>
           </Reveal>
         </div>
@@ -135,6 +139,17 @@ export function AllProductsPage() {
             </button>
 
             <button
+              onClick={() => setSelectedTab("koshk")}
+              className={`rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${
+                selectedTab === "koshk"
+                  ? "bg-brand text-white shadow-md"
+                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              کۆشکەکان ({koshkProducts.length})
+            </button>
+
+            <button
               onClick={() => setSelectedTab("lighting")}
               className={`rounded-full px-5 py-2.5 text-[13.5px] font-bold transition-all ${
                 selectedTab === "lighting"
@@ -172,7 +187,7 @@ export function AllProductsPage() {
               <h3 className="font-display text-[18px] font-bold text-gray-900 mb-6 text-center sm:text-right">
                 بەشە تایبەتمەندەکانی بەرهەمەکانمان
               </h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                 <Link
                   to="/products/capsules"
                   className="flex items-center justify-between p-4 rounded-xl border border-gray-100 bg-gray-50 hover:border-brand/40 hover:bg-brand-soft/20 transition group"
@@ -198,6 +213,21 @@ export function AllProductsPage() {
                     </span>
                     <span className="font-bold text-[14.5px] text-gray-900 group-hover:text-brand transition">
                       خانوو
+                    </span>
+                  </div>
+                  <ArrowLeft className="h-4 w-4 text-gray-400 group-hover:text-brand transition group-hover:-translate-x-1" />
+                </Link>
+
+                <Link
+                  to="/products/koshk"
+                  className="flex items-center justify-between p-4 rounded-xl border border-gray-100 bg-gray-50 hover:border-brand/40 hover:bg-brand-soft/20 transition group"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand text-white">
+                      <Store className="h-5 w-5" />
+                    </span>
+                    <span className="font-bold text-[14.5px] text-gray-900 group-hover:text-brand transition">
+                      کۆشکەکان
                     </span>
                   </div>
                   <ArrowLeft className="h-4 w-4 text-gray-400 group-hover:text-brand transition group-hover:-translate-x-1" />

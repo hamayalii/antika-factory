@@ -133,15 +133,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Global reset for media to prevent overflow */
-img,
-video,
-svg,
-canvas,
-iframe {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* Global reset for media in base layer so utility classes can override */
+@layer base {
+  img,
+  video,
+  svg,
+  canvas,
+  iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 /* Touch action for better mobile interaction */
@@ -363,3 +365,30 @@ body {
     padding-top: max(16px, env(safe-area-inset-top));
   }
 }
+
+/* ---------- Infinite Logo Marquee (Left to Right) ---------- */
+@keyframes marquee-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-ltr {
+  display: flex;
+  width: max-content;
+  animation: marquee-ltr 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-ltr:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-ltr {
+    animation-play-state: paused;
+  }
+}

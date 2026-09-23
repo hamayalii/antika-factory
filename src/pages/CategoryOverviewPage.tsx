@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Home, ChevronLeft, Layers, MessageCircle, PhoneCall, Mail, HelpCircle } from "lucide-react";
-import { getCategoryBySlug, getProductsByCategory, isHouseCategory } from "../data/productData";
+import { getCategoryBySlug, getProductsByCategory, isHouseCategory, isKoshkCategory } from "../data/productData";
 import { ProductCard } from "../components/ProductCard";
 import { Reveal } from "../components/Reveal";
 import { SEO } from "../components/SEO";
@@ -14,6 +14,24 @@ export function CategoryOverviewPage() {
   const derivedSlug = categorySlug ?? location.pathname.split("/").filter(Boolean).pop();
   const category = derivedSlug ? getCategoryBySlug(derivedSlug) : undefined;
   const products = category ? getProductsByCategory(category.id) : [];
+
+  const parentLink = category && isKoshkCategory(category.id)
+    ? "/products/koshk"
+    : category && isHouseCategory(category.id)
+    ? "/products/houses"
+    : "/products/capsules";
+
+  const parentTitle = category && isKoshkCategory(category.id)
+    ? "کۆشکەکان"
+    : category && isHouseCategory(category.id)
+    ? "خانوو"
+    : "کەپسولەکان";
+
+  const parentAllTitle = category && isKoshkCategory(category.id)
+    ? "بینینی سەرجەم کۆشکەکان"
+    : category && isHouseCategory(category.id)
+    ? "بینینی سەرجەم خانووەکان"
+    : "بینینی سەرجەم کەپسولەکان";
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -69,10 +87,10 @@ export function CategoryOverviewPage() {
             </li>
             <li className="flex items-center gap-2">
               <Link
-                to={category && isHouseCategory(category.id) ? "/products/houses" : "/products/capsules"}
+                to={parentLink}
                 className="transition hover:text-brand"
               >
-                {category && isHouseCategory(category.id) ? "خانوو" : "کەپسولەکان"}
+                {parentTitle}
               </Link>
               <ChevronLeft className="h-3.5 w-3.5 text-gray-400" />
             </li>
@@ -119,10 +137,10 @@ export function CategoryOverviewPage() {
                     داوای نرخ بکە
                   </a>
                   <Link
-                    to={isHouseCategory(category.id) ? "/products/houses" : "/products/capsules"}
+                    to={parentLink}
                     className="inline-flex items-center gap-2 rounded-full border-2 border-gray-200 bg-white px-6 py-3.5 text-[14px] font-bold text-gray-800 transition hover:border-brand hover:text-brand"
                   >
-                    {isHouseCategory(category.id) ? "بینینی سەرجەم خانووەکان" : "بینینی سەرجەم کەپسولەکان"}
+                    {parentAllTitle}
                   </Link>
                 </div>
               </Reveal>

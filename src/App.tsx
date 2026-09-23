@@ -8,6 +8,8 @@ import { CategoryOverviewPage } from "./pages/CategoryOverviewPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { LightingPage } from "./pages/LightingPage";
 import { ShelvesPage } from "./pages/ShelvesPage";
+import { KoshkPage } from "./pages/KoshkPage";
+import { TrustMarquee } from "./components/TrustMarquee";
 import {
   ArrowLeft,
   ArrowRight,
@@ -624,7 +626,7 @@ const WORKS: Work[] = [
     img: "/images/work-capsule.png",
     title: "کەپسولەکان",
     desc: "کەپسولە مۆدێرن و پێشکەوتووەکان بۆ نیشتەجێبوون، ئیش و کار، و خزمەتگوزاری لە زنجیرەکانی AL, AM, AS",
-    tag: "٣ زنجیرە • ١٦ مۆدێل",
+    tag: "٣ زنجیرە • ١٦+ مۆدێل",
     link: "/products/capsules",
   },
   {
@@ -632,9 +634,18 @@ const WORKS: Work[] = [
     cat: "خانووە مۆدولارەکان",
     img: "/images/container-cabin-2.jpg",
     title: "خانوو",
-    desc: "خانووی حاویە، خانووی ئاسایی، خانووی باخچە، و خانووی کوخ بە دیزاینی ئەندازیاری و کوالێتی بەرز",
-    tag: "٤ جۆری سەرەکی",
+    desc: "خانووی حاویە، خانووی ئاسایی، خانووی باخچە، خانووی کوخ و خانووی کۆنکریت بە دیزاینی ئەندازیاری و کوالێتی بەرز",
+    tag: "٥ جۆری سەرەکی",
     link: "/products/houses",
+  },
+  {
+    id: "koshk",
+    cat: "کۆشکی بازرگانی",
+    img: "/images/am-k.jpg",
+    title: "کۆشکەکان",
+    desc: "کۆشکی بازرگانی KA بۆ فرۆشگا، پارک، نیشتەجێبوون و بەکارهێنانی بازرگانی بە مۆدێلی جیاواز",
+    tag: "KA • ٤ مۆدێل",
+    link: "/products/koshk",
   },
   {
     id: "light",
@@ -671,11 +682,11 @@ function Works() {
             دروستکردنی ژینگەیەکی هونەری و مۆدێرن
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[15px] text-gray-600">
-            لە کەپسولە مۆدولارەکان و خانووی پێشکەوتوو تا دەگاتە نەخشەسازیی لایتی ڕووناکی و ڕەفەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
+            لە کەپسولە مۆدولارەکان، خانوو و کۆشکی بازرگانی تا دەگاتە نەخشەسازیی لایتی ڕووناکی و ڕەفەکان، هەموو وردەکارییەک بەوپەڕی داهێنان و شارەزایی ئەندازیارییەوە جێبەجێ دەکەین
           </p>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {WORKS.map((w, i) => (
             <Reveal key={w.id} delay={i * 100}>
               <article className="group overflow-hidden rounded-2xl bg-white shadow-md transition hover:shadow-lg flex flex-col h-full">
@@ -1163,6 +1174,7 @@ function HomePage() {
       <Hero />
       <UseCases />
       <Works />
+      <TrustMarquee />
       <About />
       <Process />
       <WhyChooseUs />
@@ -1209,6 +1221,7 @@ function AppContent() {
           {/* Product and Category pages */}
           <Route path="/products/capsules" element={<CapsulesPage />} />
           <Route path="/products/houses" element={<HousesPage />} />
+          <Route path="/products/koshk" element={<KoshkPage />} />
           <Route path="/what-we-do" element={<CapsulesPage />} />
           <Route path="/products" element={<CapsulesPage />} />
           <Route path="/products/lighting" element={<LightingPage />} />
@@ -1221,6 +1234,7 @@ function AppContent() {
           <Route path="/products/standard-house" element={<CategoryOverviewPage />} />
           <Route path="/products/garden-house" element={<CategoryOverviewPage />} />
           <Route path="/products/cabin-house" element={<CategoryOverviewPage />} />
+          <Route path="/products/concrete-house" element={<CategoryOverviewPage />} />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
         </Routes>
       </main>
